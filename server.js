@@ -29,9 +29,9 @@ var users = {};
 /*******************
  * AWS Initialize  *
 *******************/
-var accessKeyId =  process.env.AWS_ACCESS_KEY || "AKIAJLS3HVYFFLU2HYSQ";
-var secretAccessKey = process.env.AWS_SECRET_KEY || "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";
-var s3bucket = process.env.S3_BUCKET || "kevichino-cloud-computing";
+var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXX";
+var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXX";
+var s3bucket = process.env.S3_BUCKET || "xxxxxxx";
 var table = "Users";
 aws.config.update({
   accessKeyId: accessKeyId,
@@ -197,6 +197,10 @@ io.on('connection', function (socket) {
     var listId = users[user];
     console.log(listId);
 
+    //creates a private socket connection
+    socket.join(data.username);
+
+    //loading from s3 their info
     var params = {
       Key: user + "-" + listId + ".json",
       ResponseContentType : 'application/json'
@@ -216,6 +220,13 @@ io.on('connection', function (socket) {
   socket.on('sendMessage', function(data){
     messageHistory.push(data.message);
     io.emit('showMessage', { message: data.message } );
+  });
+  //socket query
+  socket.on('queryConference', function(data){
+    user = data.id;
+    //query conference from database
+
+    io.sockets.in(user).emit('queryResult', { message: 'test' });
   });
 });
 

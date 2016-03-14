@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
    var socket  = io.connect();
    var tasks;
    socket.emit('load', { username : username });
+   socket.emit('queryConference', { id : username });
    //chat send
    var send = document.getElementById('send');
    var sent = false;
@@ -117,6 +118,11 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#chatWindow').stop().animate({
       scrollTop: $("#chatWindow")[0].scrollHeight
     }, 800);
+  });
+
+  socket.on('queryResult', function(data){
+    var result = data.message;
+    alert('' + result);
   });
 
   function addStatusChanger(){
@@ -236,16 +242,4 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     return myObj;
   }
-  //  // main loop, running every 25ms
-  //  function mainLoop() {
-  //    if(sent == true){
-  //      sent = false;
-  //
-  //    }
-  //    if(loggingOut == true){
-  //      loggingOut = false;
-  //    }
-  //    setTimeout(mainLoop, 25);
-  //  }
-  //  mainLoop();
 });
