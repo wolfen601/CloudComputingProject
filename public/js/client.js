@@ -2,11 +2,20 @@
  * Client side operations in generating the visuals as well as functionality
 */
 document.addEventListener("DOMContentLoaded", function() {
+  //grab username from path using regex
    var username = window.location.pathname.match(/\/user\/(.*)$/)[1];
+   //open a socket with server
    var socket  = io.connect();
-   var tasks;
+   //tell server to initialize this client
    socket.emit('load', { username : username });
+   //load autofill
+   var input = document.getElementById("searchBar");
+   var awesomplete = new Awesomplete(input);
+
+   //example of private communication
    socket.emit('queryConference', { id : username });
+
+
    //chat send
    var send = document.getElementById('send');
    var sent = false;

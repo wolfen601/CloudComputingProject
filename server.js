@@ -79,7 +79,6 @@ app.post('/login', function(req, res){
           console.log("Query succeeded.");
           data.Items.forEach(function(item) {
             if(username == item.username && password == item.password){
-              users[username] = item.taskListId;
               res.redirect('/user/' + username);
             }else{
               res.redirect('/login');
@@ -150,6 +149,10 @@ app.get('/user/:id', function(req, res){
 	res.sendFile(path.join(__dirname, '/views', 'user.html'));
 });
 
+app.get('/guest', function(req, res){
+  res.redirect('/user/guest');
+});
+
 /**********************
  * Start Application  *
 ***********************/
@@ -200,7 +203,7 @@ io.on('connection', function (socket) {
     //creates a private socket connection
     socket.join(data.username);
 
-    //loading from s3 their info
+    //TODO query from dynamodb instead of s3
     var params = {
       Key: user + "-" + listId + ".json",
       ResponseContentType : 'application/json'
@@ -213,23 +216,34 @@ io.on('connection', function (socket) {
         taskList = JSON.parse(dataBucket.Body).tasks;
       }
       console.log('user: ' + user + '\n' + JSON.stringify(taskList));
-      io.emit('tasks', { username: user, tasks: taskList} );
+
+      //convert json to string array
+      var parsed = JSON.parse(json);
+      var conferenceList = [];
+      for(var x in parsed){
+        conferenceList.push(parsed[x]);
+      }
+      //
+      io.sockets.in(user).emit('initialize', { conferences: conferenceList} );
     });
-  });
-  //on message send detected, send message to all clients
-  socket.on('sendMessage', function(data){
-    messageHistory.push(data.message);
-    io.emit('showMessage', { message: data.message } );
   });
   //socket query
   socket.on('queryConference', function(data){
     user = data.id;
-    //query conference from database
+    //TODO query conference S3 from database
 
     io.sockets.in(user).emit('queryResult', { message: 'test' });
   });
-});
+  //TODO add and remove reviews using this
+  socket.on('review', function(data){
+    //conference name
+    var conference = data.name;
+    //review data
+    var review = data.review;
 
+  });
+});
+//adds new user to database
 function addNewUser(username, password) {
   var taskListId = Math.round((Math.random() * 1000000));;
   var params = {
@@ -237,7 +251,6 @@ function addNewUser(username, password) {
     Item:{
       "username": username,
       "password": password,
-      "taskListId": taskListId,
     }
   };
 
