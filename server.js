@@ -95,7 +95,7 @@ app.post('/login', function(req, res){
 app.post('/signup', function(req, res){
   var username = req.body.user.name;
   var password = req.body.user.passwd;
-  if(username !== "" && password !== ""){
+  if(username !== "" && username.toLowerCase() !== "guest" && password !== ""){
     var params = {
       TableName : table,
       KeyConditionExpression: "#usr = :name",
@@ -159,7 +159,6 @@ app.get('/guest', function(req, res){
 //start the application
 server.listen(port);
 console.log("Server running on 127.0.0.1:" + port);
-var messageHistory = [];
 var date = new Date();
 var taskList = [{
     "TaskId":"123456",
@@ -171,9 +170,6 @@ var taskList = [{
   }];
 //on successful connection from client to server
 io.on('connection', function (socket) {
-  for (var i in messageHistory) {
-     socket.emit('showMessage', { message: messageHistory[i] } );
-  }
 
   socket.on('logout', function(data){
     var user = data.id;
