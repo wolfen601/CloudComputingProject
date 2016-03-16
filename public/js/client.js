@@ -12,26 +12,31 @@ document.addEventListener("DOMContentLoaded", function() {
    var input = document.getElementById("searchBar");
    var awesomplete = new Awesomplete(input);
 
-   //example of private communication
-   socket.emit('queryConference', { id : username });
-
+   //TODO get query information from search bar and emit search
+   var search = document.getElementById('submitSearch');
+   search.onclick = function(){
+     var searchInput = document.getElementById('searchBar');
+     var searchContents = searchInput.value;
+     socket.emit('queryConference', { id : username, search: searchContents });
+   };
 
    //logout
    var logout = document.getElementById('logout');
-   var loggingOut = false;
    logout.href = "/logout/" + username;
-   logout.onclick = function(){
-     loggingOut = true;
-     var taskList = getTaskListFromTable();
-     socket.emit('logout', { id : username , tasks : taskList});
-   };
 
    //SOCKETS
+   //TODO socket for creating review
 
+   //TODO socket for editting own review
 
+   //TODO socket for editting account info
+
+   //TODO socket for editting conference data
+
+   //socket for searching for conferences
   socket.on('queryResult', function(data){
     var result = data.message;
-    alert('' + result);
+    alert('' + JSON.stringify(result));
   });
 
 });

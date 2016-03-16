@@ -25,7 +25,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+//List of all users currently on and conferences
 var users = {};
+var conferenceList = {};
+//loadConferences();
+
+
 /*******************
  * AWS Initialize  *
 *******************/
@@ -160,75 +166,50 @@ app.get('/guest', function(req, res){
 server.listen(port);
 console.log("Server running on 127.0.0.1:" + port);
 var date = new Date();
-var taskList = [{
-    "TaskId":"123456",
-    "TaskName":"Sign Up",
-    "Difficulty":"Easy",
-    "Points":"2",
-    "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-    "Status":"Complete"
+var conferenceData = [{
+    "ConferenceId":"123456",
+    "ConferenceName":"Test",
+    "Reviews":[
+      {
+        "Year": "2015",
+        "Review": [
+          {
+            "User": "Kevin",
+            "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+            "Rating": "5",
+            "Details": "So bad"
+          }
+        ]
+      },
+      {
+        "Year": "2016",
+        "Review": [
+          {
+            "User": "Neil",
+            "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+            "Rating": "10",
+            "Details": "Stepped it up"
+          }
+        ]
+      }
+    ]
   }];
 //on successful connection from client to server
 io.on('connection', function (socket) {
 
-  socket.on('logout', function(data){
-    var user = data.id;
-    var tasks = data.tasks;
-
-    var params = {
-      Key: user + "-" + users[user] + ".json",
-      Body: JSON.stringify(tasks),
-      ContentType: 'application/json',
-      ACL: 'public-read'
-    };
-    s3.putObject(params, function(errBucket, dataBucket) {
-      if (errBucket) {
-        console.log("Error uploading data: ", errBucket);
-      } else {
-        console.log("Success uploading data: ", dataBucket);
-      }
-    });
-  });
-
   socket.on('load', function(data){
-    //get task list from s3
-    var user = data.username;
-    var listId = users[user];
-    console.log(listId);
-
     //creates a private socket connection
+    var user = data.username;
     socket.join(data.username);
-
-    //TODO query from dynamodb instead of s3
-    var params = {
-      Key: user + "-" + listId + ".json",
-      ResponseContentType : 'application/json'
-    };
-    s3.getObject(params, function(errBucket, dataBucket) {
-      if (errBucket) {
-        console.log("Error downloading data: ", errBucket);
-      } else {
-        console.log("Success downloading data: ", dataBucket);
-        taskList = JSON.parse(dataBucket.Body).tasks;
-      }
-      console.log('user: ' + user + '\n' + JSON.stringify(taskList));
-
-      //convert json to string array
-      var parsed = JSON.parse(json);
-      var conferenceList = [];
-      for(var x in parsed){
-        conferenceList.push(parsed[x]);
-      }
-      //
-      io.sockets.in(user).emit('initialize', { conferences: conferenceList} );
-    });
+    //initialize the user and send them a list of the conference names
+    io.sockets.in(user).emit('initialize', { conferences: conferenceList} );
   });
   //socket query
   socket.on('queryConference', function(data){
     user = data.id;
     //TODO query conference S3 from database
 
-    io.sockets.in(user).emit('queryResult', { message: 'test' });
+    io.sockets.in(user).emit('queryResult', { message: conferenceData });
   });
   //TODO add and remove reviews using this
   socket.on('review', function(data){
@@ -256,6 +237,30 @@ function addNewUser(username, password) {
       console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
     } else {
       console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+  });
+}
+
+function loadConferences(){
+  //TODO query from dynamodb instead of s3
+  var params = {
+    Key: user + "-" + listId + ".json",
+    ResponseContentType : 'application/json'
+  };
+  s3.getObject(params, function(errBucket, dataBucket) {
+    if (errBucket) {
+      console.log("Error downloading data: ", errBucket);
+    } else {
+      console.log("Success downloading data: ", dataBucket);
+      taskList = JSON.parse(dataBucket.Body).tasks;
+    }
+    console.log('user: ' + user + '\n' + JSON.stringify(taskList));
+
+    //convert json to string array
+    var parsed = JSON.parse(json);
+    var conferenceList = [];
+    for(var x in parsed){
+      conferenceList.push(parsed[x]);
     }
   });
 }

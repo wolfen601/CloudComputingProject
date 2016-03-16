@@ -183,3 +183,17 @@ header {
 	font-weight: bold;
 	font-size: 15px;
 }
+
+#taskBar{
+	width: 100%;
+}
+
+#search{
+	float: left;
+	width: 80%;
+	text-align: center;
+	padding-top: 5px;
+}
+#navigation{
+	float: right;
+}

@@ -18,9 +18,28 @@
          <small>Track productivity easy!</small>
        </h1>
      </header>
-     <input id="searchBar"/>
 
-     
+     <div id="taskBar">
+       <div id="search">
+         <input id="searchBar"/>
+         <button id="submitSearch" class="btn btn-info">Search</button>
+       </div>
+       <div id="navigation">
+         <ul class="nav nav-tabs">
+           <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+           <li class="dropdown">
+             <a class="dropdown-toggle" data-toggle="dropdown" href="#settings">Settings
+               <span class="caret"></span></a>
+               <ul class="dropdown-menu">
+                 <li><a href="#">Account</a></li>
+                 <li><a href="#">Logout</a></li>
+               </ul>
+             </li>
+           </ul>
+
+       </div>
+     </div>
+
 
    </body>
 </html>
