@@ -166,6 +166,44 @@ app.get('/guest', function(req, res){
 server.listen(port);
 console.log("Server running on 127.0.0.1:" + port);
 var date = new Date();
+var conferenceList = [
+  {
+    "Id":"123456",
+    "Name":"Test",
+    "Acronym":"Tt",
+    "Rating":"5"
+  },
+  {
+    "Id":"41",
+    "Name":"Kevin",
+    "Acronym":"Kn",
+    "Rating":"10"
+  },
+  {
+    "Id":"6365",
+    "Name":"Neil Sewardo",
+    "Acronym":"NSo",
+    "Rating":"3"
+  },
+  {
+    "Id":"234",
+    "Name":"Raab",
+    "Acronym":"Rbb",
+    "Rating":"6"
+  },
+  {
+    "Id":"7456",
+    "Name":"Confer",
+    "Acronym":"CD",
+    "Rating":"1"
+  },
+  {
+    "Id":"4325",
+    "Name":"World Wildlife Foundation",
+    "Acronym":"WWF",
+    "Rating":"10"
+  }
+];
 var conferenceData = [{
     "Id":"123456",
     "Name":"Test",
@@ -259,11 +297,5 @@ function loadConferences(){
     }
     console.log('user: ' + user + '\n' + JSON.stringify(taskList));
 
-    //convert json to string array
-    var parsed = JSON.parse(json);
-    var conferenceList = [];
-    for(var x in parsed){
-      conferenceList.push(parsed[x]);
-    }
   });
 }
