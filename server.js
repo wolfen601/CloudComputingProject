@@ -167,8 +167,11 @@ server.listen(port);
 console.log("Server running on 127.0.0.1:" + port);
 var date = new Date();
 var conferenceData = [{
-    "ConferenceId":"123456",
-    "ConferenceName":"Test",
+    "Id":"123456",
+    "Name":"Test",
+    "Acronym":"Tt",
+    "LastEditedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+    "Description":"This is a test conference.",
     "Reviews":[
       {
         "Year": "2015",
