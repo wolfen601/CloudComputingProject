@@ -89,7 +89,7 @@ header {
 #guestButton {
 	padding-top: 30px;
 }
-#logout {
+/*#logout {
 	float: right;
 	width: 200px;
 	height: 60px;
@@ -108,7 +108,7 @@ header {
 }
 #logoutButton {
 	padding-top: 20px;
-}
+}*/
 
 /* ------ Login/Signup ------ */
 #connect {
