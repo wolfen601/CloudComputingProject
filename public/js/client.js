@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
      var searchContents = searchInput.value;
      socket.emit('queryConference', { id : username, search: searchContents });
    };
+   //TODO account page interaction
 
    //logout
    var logout = document.getElementById('logout');
