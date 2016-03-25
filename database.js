@@ -1,6 +1,6 @@
 var aws = require('aws-sdk');
 //need to load IAM user with region to work with dynamodb
-aws.config.loadFromPath('neil-aws-config.json');
+aws.config.loadFromPath('aws-config.json');
 
 var dynamodb = new aws.DynamoDB();
 var docClient = new aws.DynamoDB.DocumentClient();
@@ -37,11 +37,9 @@ var createTables = function(callback){
     var params = {
         TableName : "Conferences",
         KeySchema: [
-            { AttributeName: "Id", KeyType: "HASH" },  //Partition key
-            { AttributeName: "Acronym", KeyType: "RANGE" }  //Sort key
+            {AttributeName: "Acronym", KeyType: "HASH"}//when there is only one key, that key is used as partition and range key
         ],
         AttributeDefinitions: [
-            { AttributeName: "Id", AttributeType: "N" },
             { AttributeName: "Acronym", AttributeType: "S" }
         ],
         ProvisionedThroughput: {
@@ -61,11 +59,9 @@ var createTables = function(callback){
     var params = {
         TableName : "Users",
         KeySchema: [
-            { AttributeName: "Id", KeyType: "HASH" },  //Partition key
-            { AttributeName: "User", KeyType: "RANGE" }  //Sort key
+            { AttributeName: "User", KeyType: "HASH" }//when there is only one key, that key is used as partition and range key
         ],
         AttributeDefinitions: [
-            { AttributeName: "Id", AttributeType: "N" },
             { AttributeName: "User", AttributeType: "S" }
         ],
         ProvisionedThroughput: {
@@ -98,11 +94,24 @@ var insertConference = function (conference, callback){
     });
 }
 
+var insertUser = function (user, callback){
+    var params = {
+        TableName: "Users",
+        Item: user
+    };
+
+    docClient.put(params, function(err, data) {
+        if (err)
+            callback(err,null);
+        else
+            callback(null,"Success");
+    });
+}
+
 var getConference = function (conference, callback){
         var params = {
             TableName: "Conferences",
             Key: {
-                "Id":conference.Id,
                 "Acronym": conference.Acronym
             }
         };
@@ -115,6 +124,53 @@ var getConference = function (conference, callback){
                 callback(null,JSON.stringify(data, null, 2));
         });
 }
+
+var getUser = function (user, callback){
+    var params = {
+        TableName: "Users",
+        Key: {
+            "User": user.User
+        }
+    };
+
+    docClient.get(params, function(err, data) {
+        if (err)
+            callback(err,null);
+        else
+        //return conference
+            callback(null,JSON.stringify(data, null, 2));
+    });
+}
+
+
+var getAllConferences = function (callback){
+    var params = {
+        TableName: "Conferences",
+    };
+
+    docClient.scan(params, function(err, data) {
+        if (err)
+            callback(err,null);
+        else
+        //return conferences
+            callback(null,JSON.stringify(data, null, 2));
+    });
+}
+
+var getAllUsers = function (callback){
+    var params = {
+        TableName: "Users",
+    };
+
+    docClient.scan(params, function(err, data) {
+        if (err)
+            callback(err,null);
+        else
+        //return users
+            callback(null,JSON.stringify(data, null, 2));
+    });
+}
+
 
 var deleteConference = function (conference, callback){
     var params = {
@@ -165,7 +221,11 @@ module.exports = {
     deleteTables: deleteTables,
     createTables: createTables,
     insertConference: insertConference,
+    insertUser: insertUser,
     getConference: getConference,
+    getUser: getUser,
+    getAllConferences: getAllConferences,
+    getAllUsers: getAllUsers,
     deleteConference: deleteConference,
     updateConference: updateConference
 }
