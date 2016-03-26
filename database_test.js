@@ -120,6 +120,16 @@ var conferenceData = {
 //    }
 //});
 
+//database.insertUser(user, function(error, data){
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        //successfully inserted
+//        console.log(data);
+//    }
+//});
+
 //database.getConference(conferenceData, function(error, data)
 //{
 //    if(error){
@@ -139,8 +149,8 @@ var conferenceData = {
 //    }
 //    else{
 //        // got conference returned
-//        var conference = data;
-//        console.log(conference);
+//        var user = data;
+//        console.log(user);
 //    }
 //});
 

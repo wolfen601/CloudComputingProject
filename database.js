@@ -121,7 +121,7 @@ var getConference = function (conference, callback){
                 callback(err,null);
             else
             //return conference
-                callback(null,JSON.stringify(data, null, 2));
+                callback(null,data.Item);
         });
 }
 
@@ -137,8 +137,8 @@ var getUser = function (user, callback){
         if (err)
             callback(err,null);
         else
-        //return conference
-            callback(null,JSON.stringify(data, null, 2));
+        //return user
+            callback(null,data.Item);
     });
 }
 
@@ -153,7 +153,7 @@ var getAllConferences = function (callback){
             callback(err,null);
         else
         //return conferences
-            callback(null,JSON.stringify(data, null, 2));
+            callback(null,data.Items);
     });
 }
 

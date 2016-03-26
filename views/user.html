@@ -20,10 +20,10 @@
      </header>
 
      <div id="taskBar">
-       <div id="search">
-         <input id="searchBar"/>
+       <form class="searchForm" method="post" action="/search">
+         <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym"/>
          <button id="submitSearch" class="btn btn-info">Search</button>
-       </div>
+       </form>
        <div id="navigation">
          <ul class="nav nav-tabs">
            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
