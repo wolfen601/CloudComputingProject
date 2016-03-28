@@ -15,6 +15,7 @@ var express = require('express'),
     aws = require('aws-sdk'),
     path = require('path');
 var server = http.createServer(app);
+var database = require('./database.js');
 var io = socketIo.listen(server);
 var port = process.env.PORT || 8080;
 app.set('view engine', 'html');
@@ -39,11 +40,13 @@ var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXX";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXX";
 var s3bucket = process.env.S3_BUCKET || "xxxxxxx";
 var table = "Users";
-aws.config.update({
-  accessKeyId: accessKeyId,
-  secretAccessKey: secretAccessKey,
-  region: "us-west-2",
-});
+//aws.config.update({
+//  accessKeyId: accessKeyId,
+//  secretAccessKey: secretAccessKey,
+//  region: "us-west-2"
+//});
+
+aws.config.loadFromPath('aws-config.json');
 
 var docClient = new aws.DynamoDB.DocumentClient({
       params: {
@@ -67,63 +70,44 @@ var s3 = new aws.S3({
 app.post('/login', function(req, res){
   var username = req.body.user.name;
   var password = req.body.user.passwd;
-  if(username !== "" && password !== ""){
-    var params = {
-     TableName : table,
-     KeyConditionExpression: "#usr = :name",
-     ExpressionAttributeNames:{
-     "#usr": "username"
-     },
-     ExpressionAttributeValues: {
-     ":name":username
-     }
-   }
-   docClient.query(params, function(err, data) {
+  var queryUser = {"User":username};
+  database.getUser(queryUser,function(err, data) {
       if (err) {
-        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-        } else {
+          console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+      } else {
+          //should only have one user with name specified
           console.log("Query succeeded.");
-          data.Items.forEach(function(item) {
-            if(username == item.username && password == item.password){
-              res.redirect('/user/' + username);
-            }else{
+          if(typeof data == 'undefined'){
+              console.log("User does not exist.");
               res.redirect('/login');
-            }
-          });
-        }
-    });
-  }else{
-    console.log('Missing Username or Password.');
-    res.redirect('/login');
-  }
+          }
+          else if(username == data.User && password == data.Password){
+              res.redirect('/user/' + username);
+          }else{
+              console.log("Incorrect password.");
+              res.redirect('/login');
+          }
+      }
+  }) ;
 });
 
 app.post('/signup', function(req, res){
   var username = req.body.user.name;
   var password = req.body.user.passwd;
+  var queryUser = {"User":username};
   if(username !== "" && username.toLowerCase() !== "guest" && password !== ""){
-    var params = {
-      TableName : table,
-      KeyConditionExpression: "#usr = :name",
-      ExpressionAttributeNames:{
-        "#usr": "username"
-      },
-      ExpressionAttributeValues: {
-        ":name":username
-      }
-    }
-    docClient.query(params, function(err, data) {
+      database.getUser(queryUser, function(err, data) {
       if (err) {
         console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
       } else {
         console.log("Query succeeded.");
-        if(data.Items.length > 0){
-          console.log("User exists.");
-          res.redirect('/signup');
+        if(typeof data == 'undefined'){
+            console.log("User does not exist.");
+            addNewUser(username, password);
+            res.redirect('/user/' + username);
         }else{
-          console.log("User does not exists.");
-          addNewUser(username, password);
-          res.redirect('/');
+            console.log("User exists.");
+            res.redirect('/signup');
         }
       }
     });
@@ -139,6 +123,10 @@ app.get('/', function(req, res){
 
 app.get('/login', function(req, res){
 	res.sendFile(path.join(__dirname, '/views', 'login.html'));
+});
+
+app.get('/search', function(req, res){
+  res.sendFile(path.join(__dirname, '/views', 'search.html'));
 });
 
 app.get('/logout/:id', function(req, res){
@@ -263,23 +251,19 @@ io.on('connection', function (socket) {
 });
 //adds new user to database
 function addNewUser(username, password) {
-  var taskListId = Math.round((Math.random() * 1000000));;
-  var params = {
-    TableName: table,
-    Item:{
-      "username": username,
-      "password": password,
-    }
-  };
-
   console.log("Adding a new user...");
-  docClient.put(params, function(err, data) {
-    if (err) {
-      console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-      console.log("Added item:", JSON.stringify(data, null, 2));
-    }
-  });
+    var user = {"User":username, "Password":password};
+    database.insertUser(user, function(error, data){
+        if(error){
+            console.log(error);
+        }
+        else{
+            //successfully inserted
+            console.log("Added user");
+            console.log(data);
+        }
+    });
+
 }
 
 function loadConferences(){

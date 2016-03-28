@@ -1,7 +1,9 @@
 var date = new Date();
 var database = require('./database.js');
 var conferences = require('./info/conferences.json');
+var users = require('./info/users.json');
 var conference = conferences[0];
+var user = users[0];
 
 // cannot insert Name column (specially reserved)
 var conferenceData = {
@@ -54,6 +56,40 @@ var conferenceData = {
 //
 //}
 
+////insert all users
+//for (var x = 0; x < users.length; x++){
+//    var user = users[x];
+//
+//    database.insertUser(user, function(error, data){
+//        if(error){
+//            console.log(error);
+//        }
+//        else{
+//            //successfully inserted
+//            console.log(data);
+//        }
+//    });
+//
+//}
+
+//database.getAllConferences(function(error, data){
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        console.log(data);
+//    }
+//});
+
+//database.getAllUsers(function(error, data){
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        console.log(data);
+//    }
+//});
+
 //database.deleteTables(function(error, data){
 //    if(error){
 //        console.log(error);
@@ -84,6 +120,16 @@ var conferenceData = {
 //    }
 //});
 
+//database.insertUser(user, function(error, data){
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        //successfully inserted
+//        console.log(data);
+//    }
+//});
+
 //database.getConference(conferenceData, function(error, data)
 //{
 //    if(error){
@@ -93,6 +139,18 @@ var conferenceData = {
 //        // got conference returned
 //        var conference = data;
 //        console.log(conference);
+//    }
+//});
+
+//database.getUser(user, function(error, data)
+//{
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        // got conference returned
+//        var user = data;
+//        console.log(user);
 //    }
 //});
 
