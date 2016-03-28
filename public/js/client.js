@@ -4,6 +4,20 @@
 document.addEventListener("DOMContentLoaded", function() {
   //grab username from path using regex
    var username = window.location.pathname.match(/\/user\/(.*)$/)[1];
+
+   //TODO account page interaction
+
+   //TODO creating review
+
+   //TODO editting review
+
+   //TODO editting account info
+
+   //TODO adding conference data
+
+   //TODO editting conference data
+
+   //search
    var search = document.getElementById('submitSearch');
    search.onclick = function(){
      var searchInput = document.getElementById('searchBar');
@@ -11,7 +25,8 @@ document.addEventListener("DOMContentLoaded", function() {
      searchConf(searchContents);
    };
 
-   //TODO account page interaction
+   //TODO other interactions
+
 
    //logout
    var logout = document.getElementById('logout');

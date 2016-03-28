@@ -25,7 +25,7 @@ function editReview(conferenceName, reviewContents){
 function editAccount(accountContents){
   socket.emit('editAccount', { id : username, account: accountContents });
 }
-// socket for editting conference data
+// socket for adding conference data
 function addConf(confContents){
   socket.emit('addConference', { id : username, conference: confContents });
 }
