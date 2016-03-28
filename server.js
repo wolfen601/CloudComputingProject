@@ -203,6 +203,7 @@ var conferenceData = [{
         "Year": "2015",
         "Review": [
           {
+            "Id": "21424",
             "User": "Kevin",
             "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
             "Rating": "5",
@@ -214,6 +215,7 @@ var conferenceData = [{
         "Year": "2016",
         "Review": [
           {
+            "Id": "42135",
             "User": "Neil",
             "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
             "Rating": "10",
@@ -225,7 +227,7 @@ var conferenceData = [{
   }];
 //on successful connection from client to server
 io.on('connection', function (socket) {
-
+  //load user
   socket.on('load', function(data){
     //creates a private socket connection
     var user = data.username;
@@ -233,20 +235,81 @@ io.on('connection', function (socket) {
     //initialize the user and send them a list of the conference names
     io.sockets.in(user).emit('initialize', { conferences: conferenceList} );
   });
+
+  //TODO add reviews using this
+  socket.on('createReview', function(data){
+    //user
+    var user = data.id;
+    //conference name
+    var conference = data.name;
+    //review data
+    var review = data.review;
+    //TODO add review to s3 object by getting object, add new line, store it
+    //TODO send new conference object as result after successful s3 insert
+
+    //emit results
+    io.sockets.in(user).emit('createReviewResult', { results: conferenceList} );
+  });
+  //TODO edit reviews
+  socket.on('editReview', function(data){
+    //user
+    var user = data.id;
+    //conference name
+    var conference = data.name;
+    //review data
+    var review = data.review;
+    //TODO edit review to s3 object by getting object, editting info, store it
+    //TODO send new conference object as result after successful s3 insert
+
+    //emit results
+    io.sockets.in(user).emit('editReviewResult', { results: conferenceList} );
+  });
+  //TODO edit account
+  socket.on('editAccount', function(data){
+    //user
+    var user = data.id;
+    //account data
+    var accountData = data.account;
+    //TODO edit account in dynamo by changing or adding new fields. username cannot be changed
+    //TODO send new account info object as result after successful dynamo edit
+
+    //emit results
+    io.sockets.in(user).emit('editAccountResult', { results: conferenceList} );
+
+  });
+  //TODO add conference
+  socket.on('addConference', function(data){
+    //user
+    var user = data.id;
+    //account data
+    var conferenceData = data.conference;
+    //TODO add conference to new s3 object
+    //TODO add conference to list of conferences
+    //TODO send new conference list as result after successful s3 and dynamo insert
+
+    //emit results
+    io.sockets.in(user).emit('addConferenceResult', { results: conferenceList} );
+
+  });
+  //TODO edit conference
+  socket.on('editConference', function(data){
+    //user
+    var user = data.id;
+    //account data
+    var conferenceData = data.conference;
+    //TODO edit conference to s3 object by getting object, add new line, store it
+    //TODO conference name cannot be changed but acronym can
+    //TODO send new conference object as result after successful s3 insert
+
+    //emit results
+    io.sockets.in(user).emit('editConferenceResult', { results: conferenceList} );
+  });
   //socket query
   socket.on('queryConference', function(data){
     user = data.id;
     //TODO query conference S3 from database
 
     io.sockets.in(user).emit('queryResult', { message: conferenceData });
-  });
-  //TODO add and remove reviews using this
-  socket.on('review', function(data){
-    //conference name
-    var conference = data.name;
-    //review data
-    var review = data.review;
-
   });
 });
 //adds new user to database
