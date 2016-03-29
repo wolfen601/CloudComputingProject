@@ -217,6 +217,33 @@ var updateConference = function(conference,callback){
     });
 }
 
+var updateAccount = function(account,callback){
+    var params = {
+        TableName: "Users",
+        Key: {
+            "User": user.User
+        }
+    };
+
+    //having trouble with using the update function, so delete then insert instead of update
+    docClient.delete(params, function(err) {
+        if (err)
+            callback(err,null);
+        else {
+            insertUser(account, function (error) {
+                if (error) {
+                    callback(error,null);
+                }
+                else {
+                    //successfully inserted
+                    callback(null,"Success");
+                }
+            });
+        }
+
+    });
+}
+
 module.exports = {
     deleteTables: deleteTables,
     createTables: createTables,
@@ -227,7 +254,8 @@ module.exports = {
     getAllConferences: getAllConferences,
     getAllUsers: getAllUsers,
     deleteConference: deleteConference,
-    updateConference: updateConference
+    updateConference: updateConference,
+    updateAccount: updateAccount
 }
 
 

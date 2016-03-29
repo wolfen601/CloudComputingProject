@@ -39,6 +39,12 @@ var conferenceData = {
     ]
 };
 
+var accountData = {
+    "User":"admin",
+    "Password":"root",
+    "Id":0
+};
+
 ////insert all conferences into database
 ////after testing, only 616 conferences can be inserted before getting a throughput error (we are inserting to much, too quick)
 //for (var x = 0; x < conferences.length; x++){
@@ -175,5 +181,17 @@ var conferenceData = {
 //        // got conference returned
 //        var conference = data;
 //        console.log(conference);
+//    }
+//});
+
+//database.updateAccount(user, function(error, data)
+//{
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        // got conference returned
+//        var user = data;
+//        console.log(user);
 //    }
 //});

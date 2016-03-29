@@ -2,10 +2,10 @@
  * Server file
  * Handles communication with the storage service as well as emitting messages
  * to all clients.
-*/
+ */
 /***************
  * Initialize  *
-***************/
+ ***************/
 //initialize all the required libraries and connections
 var express = require('express'),
     app = express(),
@@ -24,7 +24,7 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 
 //List of all users currently on and conferences
@@ -35,7 +35,7 @@ var conferenceList = {};
 
 /*******************
  * AWS Initialize  *
-*******************/
+ *******************/
 var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXX";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXX";
 var s3bucket = process.env.S3_BUCKET || "xxxxxxx";
@@ -49,272 +49,321 @@ var table = "Users";
 aws.config.loadFromPath('aws-config.json');
 
 var docClient = new aws.DynamoDB.DocumentClient({
-      params: {
+    params: {
         endpoint:  "https://dynamodb.us-west-2.amazonaws.com"
-      }
+    }
 });
 
 // //set the desired s3 bucket to use
 var s3 = new aws.S3({
-      params: {
+    params: {
         Bucket: s3bucket,
         endpoint:  "https://s3.us-west-2.amazonaws.com"
-      }
+    }
 });
 
 /***************
  * Routing     *
-***************/
+ ***************/
 //homepage
 
 app.post('/login', function(req, res){
-  var username = req.body.user.name;
-  var password = req.body.user.passwd;
-  var queryUser = {"User":username};
-  database.getUser(queryUser,function(err, data) {
-      if (err) {
-          console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-      } else {
-          //should only have one user with name specified
-          console.log("Query succeeded.");
-          if(typeof data == 'undefined'){
-              console.log("User does not exist.");
-              res.redirect('/login');
-          }
-          else if(username == data.User && password == data.Password){
-              res.redirect('/user/' + username);
-          }else{
-              console.log("Incorrect password.");
-              res.redirect('/login');
-          }
-      }
-  }) ;
+    var username = req.body.user.name;
+    var password = req.body.user.passwd;
+    var queryUser = {"User":username};
+    database.getUser(queryUser,function(err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            //should only have one user with name specified
+            console.log("Query succeeded.");
+            if(typeof data == 'undefined'){
+                console.log("User does not exist.");
+                res.redirect('/login');
+            }
+            else if(username == data.User && password == data.Password){
+                res.redirect('/user/' + username);
+            }else{
+                console.log("Incorrect password.");
+                res.redirect('/login');
+            }
+        }
+    }) ;
 });
 
 app.post('/signup', function(req, res){
-  var username = req.body.user.name;
-  var password = req.body.user.passwd;
-  var queryUser = {"User":username};
-  if(username !== "" && username.toLowerCase() !== "guest" && password !== ""){
-      database.getUser(queryUser, function(err, data) {
-      if (err) {
-        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-      } else {
-        console.log("Query succeeded.");
-        if(typeof data == 'undefined'){
-            console.log("User does not exist.");
-            addNewUser(username, password);
-            res.redirect('/user/' + username);
-        }else{
-            console.log("User exists.");
-            res.redirect('/signup');
-        }
-      }
-    });
-  }else{
-    console.log('Missing Username or Password.');
-      res.redirect('/signup');
-  }
+    var username = req.body.user.name;
+    var password = req.body.user.passwd;
+    var queryUser = {"User":username};
+    if(username !== "" && username.toLowerCase() !== "guest" && password !== ""){
+        database.getUser(queryUser, function(err, data) {
+            if (err) {
+                console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+            } else {
+                console.log("Query succeeded.");
+                if(typeof data == 'undefined'){
+                    console.log("User does not exist.");
+                    addNewUser(username, password);
+                    res.redirect('/user/' + username);
+                }else{
+                    console.log("User exists.");
+                    res.redirect('/signup');
+                }
+            }
+        });
+    }else{
+        console.log('Missing Username or Password.');
+        res.redirect('/signup');
+    }
 });
 
 app.get('/', function(req, res){
-	res.sendFile(path.join(__dirname, '/views', 'home.html'));
+    res.sendFile(path.join(__dirname, '/views', 'home.html'));
 });
 
 app.get('/login', function(req, res){
-	res.sendFile(path.join(__dirname, '/views', 'login.html'));
+    res.sendFile(path.join(__dirname, '/views', 'login.html'));
 });
 
 app.get('/search', function(req, res){
-  res.sendFile(path.join(__dirname, '/views', 'search.html'));
+    res.sendFile(path.join(__dirname, '/views', 'search.html'));
 });
 
 app.get('/logout/:id', function(req, res){
-  console.log('logout: ' + req.params.id);
-  delete users[req.params.id];
-	res.redirect('/');
+    console.log('logout: ' + req.params.id);
+    delete users[req.params.id];
+    res.redirect('/');
 });
 
 app.get('/signup', function(req, res){
-	res.sendFile(path.join(__dirname, '/views', 'signup.html'));
+    res.sendFile(path.join(__dirname, '/views', 'signup.html'));
 });
 
 app.get('/user/:id', function(req, res){
-	res.sendFile(path.join(__dirname, '/views', 'user.html'));
+    res.sendFile(path.join(__dirname, '/views', 'user.html'));
 });
 
 app.get('/guest', function(req, res){
-  res.redirect('/user/guest');
+    res.redirect('/user/guest');
 });
 
 /**********************
  * Start Application  *
-***********************/
+ ***********************/
 //start the application
 server.listen(port);
 console.log("Server running on 127.0.0.1:" + port);
 var date = new Date();
 var conferenceList = [
-  {
-    "Id":"123456",
-    "Name":"Test",
-    "Acronym":"Tt",
-    "Rating":"5"
-  },
-  {
-    "Id":"41",
-    "Name":"Kevin",
-    "Acronym":"Kn",
-    "Rating":"10"
-  },
-  {
-    "Id":"6365",
-    "Name":"Neil Sewardo",
-    "Acronym":"NSo",
-    "Rating":"3"
-  },
-  {
-    "Id":"234",
-    "Name":"Raab",
-    "Acronym":"Rbb",
-    "Rating":"6"
-  },
-  {
-    "Id":"7456",
-    "Name":"Confer",
-    "Acronym":"CD",
-    "Rating":"1"
-  },
-  {
-    "Id":"4325",
-    "Name":"World Wildlife Foundation",
-    "Acronym":"WWF",
-    "Rating":"10"
-  }
+    {
+        "Id":"123456",
+        "Name":"Test",
+        "Acronym":"Tt",
+        "OverallRating":"5"
+    },
+    {
+        "Id":"41",
+        "Name":"Kevin",
+        "Acronym":"Kn",
+        "OverallRating":"10"
+    },
+    {
+        "Id":"6365",
+        "Name":"Neil Sewardo",
+        "Acronym":"NSo",
+        "OverallRating":"3"
+    },
+    {
+        "Id":"234",
+        "Name":"Raab",
+        "Acronym":"Rbb",
+        "OverallRating":"6"
+    },
+    {
+        "Id":"7456",
+        "Name":"Confer",
+        "Acronym":"CD",
+        "OverallRating":"1"
+    },
+    {
+        "Id":"4325",
+        "Name":"World Wildlife Foundation",
+        "Acronym":"WWF",
+        "OverallRating":"10"
+    }
 ];
-var conferenceData = [{
+var conferenceData = {
     "Id":"123456",
     "Name":"Test",
     "Acronym":"Tt",
     "LastEditedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
     "Description":"This is a test conference.",
+    "OverallRating":4,
     "Reviews":[
-      {
-        "Year": "2015",
-        "Review": [
-          {
-            "Id": "21424",
-            "User": "Kevin",
-            "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-            "Rating": "5",
-            "Details": "So bad"
-          }
-        ]
-      },
-      {
-        "Year": "2016",
-        "Review": [
-          {
-            "Id": "42135",
-            "User": "Neil",
-            "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-            "Rating": "10",
-            "Details": "Stepped it up"
-          }
-        ]
-      }
+        {
+            "Year": "2015",
+            "Review":
+                {
+                    "Id": "21424",
+                    "User": "Kevin",
+                    "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+                    "Rating": "5",
+                    "Details": "So bad"
+                }
+
+        },
+        {
+            "Year": "2016",
+            "Review":
+                {
+                    "Id": "42135",
+                    "User": "Neil",
+                    "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+                    "Rating": "10",
+                    "Details": "Stepped it up"
+                }
+
+        }
     ]
-  }];
+};
 //on successful connection from client to server
 io.on('connection', function (socket) {
-  //load user
-  socket.on('load', function(data){
-    //creates a private socket connection
-    var user = data.username;
-    socket.join(data.username);
-    //initialize the user and send them a list of the conference names
-    io.sockets.in(user).emit('initialize', { conferences: conferenceList} );
-  });
+    //load user
+    socket.on('load', function(data){
+        //creates a private socket connection
+        var user = data.username;
+        socket.join(data.username);
+        //initialize the user and send them a list of the conference names
+        io.sockets.in(user).emit('initialize', { conferences: conferenceList} );
+    });
 
-  //TODO add reviews using this
-  socket.on('createReview', function(data){
-    //user
-    var user = data.id;
-    //conference name
-    var conference = data.name;
-    //review data
-    var review = data.review;
-    //TODO add review to s3 object by getting object, add new line, store it
-    //TODO send new conference object as result after successful s3 insert
+    //add reviews
+    socket.on('createReview', function(data){
+        //user
+        var user = data.id;
+        //conference name
+        var conference = {"Acronym":data.name};
+        //review data
+        var review = data.review;
 
-    //emit results
-    io.sockets.in(user).emit('createReviewResult', { results: conferenceList} );
-  });
-  //TODO edit reviews
-  socket.on('editReview', function(data){
-    //user
-    var user = data.id;
-    //conference name
-    var conference = data.name;
-    //review data
-    var review = data.review;
-    //TODO edit review to s3 object by getting object, editting info, store it
-    //TODO send new conference object as result after successful s3 insert
+        database.getConference(conference, function(error, data){
+            if(error){
+                console.log(error);
+            }
+            else{
+                // got conference returned
+                var conference = data;
 
-    //emit results
-    io.sockets.in(user).emit('editReviewResult', { results: conferenceList} );
-  });
-  //TODO edit account
-  socket.on('editAccount', function(data){
-    //user
-    var user = data.id;
-    //account data
-    var accountData = data.account;
-    //TODO edit account in dynamo by changing or adding new fields. username cannot be changed
-    //TODO send new account info object as result after successful dynamo edit
+                if (typeof conference.Review == 'undefined') {
+                    //no review are added
+                    conference.Review = [review];
+                }
+                else{
+                    //reviews exist, append
+                    conference.Reviews.push(review);
+                }
+                database.updateConference(conference, function(error, data){
+                    if(error){
+                        console.log(error);
+                    }
+                    else{
+                        //emit results
+                        io.sockets.in(user).emit('createReviewResult', { results: conference} );
+                    }
+                });
+            }
+        });
+    });
+    //TODO edit reviews
+    socket.on('editReview', function(data){
+        //user
+        var user = data.id;
+        //conference name
+        var conference = {"Acronym":data.name};
+        //review data
+        var review = data.review;
+        //TODO edit review to s3 object by getting object, editting info, store it
+        //TODO send new conference object as result after successful s3 insert
 
-    //emit results
-    io.sockets.in(user).emit('editAccountResult', { results: conferenceList} );
 
-  });
-  //TODO add conference
-  socket.on('addConference', function(data){
-    //user
-    var user = data.id;
-    //account data
-    var conferenceData = data.conference;
-    //TODO add conference to new s3 object
-    //TODO add conference to list of conferences
-    //TODO send new conference list as result after successful s3 and dynamo insert
 
-    //emit results
-    io.sockets.in(user).emit('addConferenceResult', { results: conferenceList} );
+        //emit results
+        io.sockets.in(user).emit('editReviewResult', { results: conference} );
+    });
+    //edit account
+    socket.on('editAccount', function(data){
+        //user
+        var user = data.id;
+        //account data
+        var accountData = data.account;
 
-  });
-  //TODO edit conference
-  socket.on('editConference', function(data){
-    //user
-    var user = data.id;
-    //account data
-    var conferenceData = data.conference;
-    //TODO edit conference to s3 object by getting object, add new line, store it
-    //TODO conference name cannot be changed but acronym can
-    //TODO send new conference object as result after successful s3 insert
+        database.updateAccount(accountData, function(error, data)
+        {
+            if(error){
+                console.log(error);
+            }
+            else{
+                //emit results
+                io.sockets.in(user).emit('editAccountResult', { results: accountData} );
+            }
+        });
+    });
+    //add conference
+    socket.on('addConference', function(data){
+        //user
+        var user = data.id;
+        //account data
+        var conference = data.conference;
+        conferenceList.push(conference);
 
-    //emit results
-    io.sockets.in(user).emit('editConferenceResult', { results: conferenceList} );
-  });
-  //socket query
-  socket.on('queryConference', function(data){
-    user = data.id;
-    //TODO query conference S3 from database
+        database.insertConference(conferenceData, function(error, data){
+            if(error){
+                console.log(error);
+            }
+            else{
+                //emit results
+                io.sockets.in(user).emit('addConferenceResult', { results: conferenceList} );
+            }
+        });
+    });
+    //edit conference
+    socket.on('editConference', function(data){
+        //user
+        var user = data.id;
+        //conference data
+        var conference = {"Acronym":data.name};
+        database.updateConference(conference, function(error, data){
+            if(error){
+                console.log(error);
+            }
+            else{
+                //emit results
+                io.sockets.in(user).emit('editConferenceResult', { results: conference} );
+            }
+        });
+    });
+    //socket query
+    socket.on('queryConference', function(data){
+        var user = data.id;
+        //conference data
+        var conference = {"Acronym":data.name};
+        database.getConference(conference, function(error, data){
+            if(error){
+                console.log(error);
+            }
+            else{
+                // got conference returned
+                var conference = data;
+                io.sockets.in(user).emit('queryResult', { message: conference });
+            }
+    });
 
-    io.sockets.in(user).emit('queryResult', { message: conferenceData });
-  });
+    });
 });
+
 //adds new user to database
 function addNewUser(username, password) {
-  console.log("Adding a new user...");
+    console.log("Adding a new user...");
     var user = {"User":username, "Password":password};
     database.insertUser(user, function(error, data){
         if(error){
@@ -330,19 +379,12 @@ function addNewUser(username, password) {
 }
 
 function loadConferences(){
-  //TODO query from dynamodb instead of s3
-  var params = {
-    Key: user + "-" + listId + ".json",
-    ResponseContentType : 'application/json'
-  };
-  s3.getObject(params, function(errBucket, dataBucket) {
-    if (errBucket) {
-      console.log("Error downloading data: ", errBucket);
-    } else {
-      console.log("Success downloading data: ", dataBucket);
-      taskList = JSON.parse(dataBucket.Body).tasks;
-    }
-    console.log('user: ' + user + '\n' + JSON.stringify(taskList));
-
-  });
+    database.getAllConferences(function(error, data){
+        if(error){
+            console.log(error);
+        }
+        else{
+            conferenceList = data;
+        }
+    });
 }
