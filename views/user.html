@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Werk</title>
+      <title>CoCo Conference</title>
       <meta charset="utf-8">
       <link rel="stylesheet" href="../css/awesomplete.css" />
       <script src="../js/awesomplete.min.js" async></script>
@@ -15,33 +15,46 @@
    </head>
    <body>
      <header>
-       <h1>Werk
-         <small>Track productivity easy!</small>
+       <h1>CoCo Conference
+         <small>Rate and share conferences easily!</small>
        </h1>
      </header>
+     <div class="container">
+     <div class="row">
+     <div id="navigation">
+       <ul class="nav nav-tabs">
+         <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+         <li class="dropdown">
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings
+             <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               <li><a href="#account">Account</a></li>
+               <li><a id="logout"><div id="logoutButton">Log Out</div></a></li>
+             </ul>
+           </li>
+         </ul>
+     </div>
+   </div>
+ </div>
 
-     <div id="taskBar">
-       <form class="searchForm" method="post" action="/search">
-         <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym"/>
-         <button id="submitSearch" class="btn btn-info">Search</button>
-       </form>
-       <div id="navigation">
-         <ul class="nav nav-tabs">
-           <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-           <li class="dropdown">
-             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings
-               <span class="caret"></span></a>
-               <ul class="dropdown-menu">
-                 <li><a href="#account">Account</a></li>
-                 <li><a id="logout"><div id="logoutButton">Log Out</div></a></li>
-               </ul>
-             </li>
-           </ul>
+     <div class="container" style="background: #ffffff">
+       <div class="row">
+
+         <div class="container">
+           <div id="taskBar">
+             <form class="searchForm" method="post" action="/search" style="padding: 10px;">
+                 <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym" style="padding: 10px; vertical-align: top;"/>
+                 <button id="submitSearch" class="btn btn-info" style="padding: 10px; vertical-align: top;">Search</button>
+             </form>
+           </div>
+         </div>
+
        </div>
      </div>
+
+
      <div class="tab-content">
        <div id="home" class="tab-pane fade in active">
-
        </div>
     </div>
 
