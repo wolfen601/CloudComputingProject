@@ -103,9 +103,9 @@ function showConferences(data){
     var organization = data.message.Organization;
     var reviews = data.message.Reviews;
     //alert("" + fullname + " : " + acronym + " : " + lastEditedOn + " : " + description + " : " + organization + " : " + reviews);
-    
+
     //conference
-    
+
     //containers
     var containerHead = document.createElement("div");
     containerHead.className = "panel panel-default";
@@ -115,7 +115,7 @@ function showConferences(data){
     bodyCollapse.className = "panel-collapse collapse";
     var panelBody = document.createElement("div");
     panelBody.className = "panel-body";
-    
+
     //CONFERENCE HEADER
     //fullname
     var nameWindow = document.createElement("h4");
@@ -152,13 +152,13 @@ function showConferences(data){
     descriptionText.className = "conferenceSpan";
     descriptionText.innerHTML = description || "";
     descriptionWindow.appendChild(descriptionText);
-    
+
     headClearfix.appendChild(nameWindow);
     headClearfix.appendChild(acronymWindow);
     headClearfix.appendChild(organizationWindow);
     headClearfix.appendChild(lastEditedOnWindow);
     headClearfix.appendChild(descriptionWindow);
-    
+
     //CONFERENCE REVIEWS
     //reviews
     var reviewsWindow = document.createElement("div");
@@ -167,16 +167,18 @@ function showConferences(data){
     reviewsWindow.appendChild(reviewsText);
     reviewsWindow.id = "reviews";
 
-    //function to loop through years and put reviews in
-    showReviews(reviews);
-    
+
+
     //add to body
     panelBody.appendChild(reviewsWindow);
     bodyCollapse.appendChild(panelBody);
-    
+
     containerHead.appendChild(headClearfix);
     containerHead.appendChild(bodyCollapse);
     conferWindow.appendChild(containerHead);
+
+    //function to loop through years and put reviews in
+    showReviews(reviews);
 }
 function showReviews(reviews){
   var reviewsWindow = document.getElementById('reviews');
