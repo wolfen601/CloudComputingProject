@@ -38,18 +38,23 @@
  </div>
 
      <div class="container" style="background: #ffffff">
+         <!--Search bar-->
        <div class="row">
-
          <div class="container">
            <div id="taskBar">
-             <form class="searchForm" style="padding: 10px;">
+             <form class="searchForm" onsubmit="return false;" style="padding: 10px;">
                  <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym" style="padding: 10px; vertical-align: top;"/>
                  <button id="submitSearch" class="btn btn-info" style="padding: 10px; vertical-align: top;">Search</button>
              </form>
            </div>
          </div>
-
        </div>
+       
+       <!-- Conference results-->
+        <div class="row">
+            <h2 id="results" style="padding:10px;"></h2>
+        </div>
+       
      </div>
 
 

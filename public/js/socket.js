@@ -35,7 +35,6 @@ function editConf(confContents){
 }
 // get query information from search bar and emit search
 function searchConf(searchContents){
-    alert(searchContents);
   socket.emit('queryConference', { id : username, name: searchContents });
 }
 
