@@ -140,14 +140,76 @@ function showConferences(data){
     descriptionText.innerHTML = description || "";
     descriptionWindow.appendChild(descriptionText);
     //reviews
-    var reviewWindow = document.createElement("div");
-    //TODO function to loop through years and put reviews in
-    
+    var reviewsWindow = document.createElement("div");
+    var reviewsText = document.createElement("span");
+    reviewsText.innerHTML = "REVIEWS";
+    reviewsWindow.appendChild(reviewsText);
+    reviewsWindow.id = "reviews";
     //add to window
     conferWindow.appendChild(nameWindow);
     conferWindow.appendChild(acronymWindow);
     conferWindow.appendChild(organizationWindow);
     conferWindow.appendChild(lastEditedOnWindow);
     conferWindow.appendChild(descriptionWindow);
+    conferWindow.appendChild(reviewsWindow);
+    //function to loop through years and put reviews in
+    showReviews(reviews);
+}
+function showReviews(reviews){
+  var reviewsWindow = document.getElementById('reviews');
+  if(reviews != undefined){
+    for(var i = 0; i < reviews.length; i++){
+      alert(reviews[i]);
+      var yearWindow = document.createElement("div");
+      yearWindow.innerHTML = "Year: ";
+      var yearText = document.createElement("span");
+      yearText.className = "reviewSpan";
+      yearText.innerHTML = reviews[i].Year || "";
+      var yearReviews = document.createElement("div");
+      yearWindow.appendChild(yearText);
 
+      var reviewList = reviews[i].Review;
+      for(var j = 0; j < reviewList.length; j++){
+        var reviewWindow = document.createElement("div");
+        //user
+        var userWindow = document.createElement("h4");
+        userWindow.innerHTML = "User: ";
+        var userText = document.createElement("span");
+        userText.className = "reviewSpan";
+        userText.innerHTML = reviewList[j].User || "";
+        userWindow.appendChild(userText);
+        //created on
+        var createdOnWindow = document.createElement("h4");
+        createdOnWindow.innerHTML = "Created On: ";
+        var createdOnText = document.createElement("span");
+        createdOnText.className = "reviewSpan";
+        createdOnText.innerHTML = reviewList[j].CreatedOn || "";
+        createdOnWindow.appendChild(createdOnText);
+        //rating
+        var ratingWindow = document.createElement("h4");
+        ratingWindow.innerHTML = "Rating: ";
+        var ratingText = document.createElement("span");
+        ratingText.className = "reviewSpan";
+        ratingText.innerHTML = reviewList[j].Rating || "";
+        ratingWindow.appendChild(ratingText);
+        //details
+        var detailsWindow = document.createElement("h4");
+        detailsWindow.innerHTML = "Details: ";
+        var detailsText = document.createElement("span");
+        detailsText.className = "reviewSpan";
+        detailsText.innerHTML = reviewList[j].Details || "";
+        detailsWindow.appendChild(detailsText);
+        //review
+        reviewWindow.appendChild(userWindow);
+        reviewWindow.appendChild(createdOnWindow);
+        reviewWindow.appendChild(ratingWindow);
+        reviewWindow.appendChild(detailsWindow);
+        //add to the year
+        yearReviews.appendChild(reviewWindow);
+      }
+      //append reviews for each year
+      yearWindow.appendChild(yearReviews);
+      reviewsWindow.appendChild(yearWindow);
+    }
+  }
 }
