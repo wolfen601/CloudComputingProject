@@ -70,6 +70,7 @@ socket.on('editConferenceResult', function(data){
 socket.on('queryResult', function(data){
   var result = data.message;
   alert("" + JSON.stringify(result));
+  showConferences(data);
 });
 
 
@@ -90,3 +91,63 @@ socket.on('initialize', function(data){
   awesomplete.list = conferenceNames;
   //alert(conferenceNames);
 });
+function showConferences(data){
+
+    var conferWindow = document.getElementById('home');
+    conferWindow.innerHTML = "";
+    //data
+    var fullname = data.message.FullName;
+    var acronym = data.message.Acronym;
+    var lastEditedOn = data.message.LastEditedOn;
+    var description = data.message.Description;
+    var organization = data.message.Organization;
+    var reviews = data.message.Reviews;
+    alert("" + fullname + " : " + acronym + " : " + lastEditedOn + " : " + description + " : " + organization + " : " + reviews);
+    //conference
+    //fullname
+    var nameWindow = document.createElement("h4");
+    nameWindow.innerHTML = "Conference Name: ";
+    var nameText = document.createElement("span");
+    nameText.className = "conferenceSpan";
+    nameText.innerHTML = fullname || "";
+    nameWindow.appendChild(nameText);
+    //acronym
+    var acronymWindow = document.createElement("h4");
+    acronymWindow.innerHTML = "Acronym: ";
+    var acronymText = document.createElement("span");
+    acronymText.className = "conferenceSpan";
+    acronymText.innerHTML = acronym || "";
+    acronymWindow.appendChild(acronymText);
+    //organization
+    var organizationWindow = document.createElement("h4");
+    organizationWindow.innerHTML = "Organization: ";
+    var organizationText = document.createElement("span");
+    organizationText.className = "conferenceSpan";
+    organizationText.innerHTML = organization || "";
+    organizationWindow.appendChild(organizationText);
+    //lastEditedOn
+    var lastEditedOnWindow = document.createElement("h4");
+    lastEditedOnWindow.innerHTML = "Last Edited On: ";
+    var lastEditedOnText = document.createElement("span");
+    lastEditedOnText.className = "conferenceSpan";
+    lastEditedOnText.innerHTML = lastEditedOn || "";
+    lastEditedOnWindow.appendChild(lastEditedOnText);
+    //description
+    var descriptionWindow = document.createElement("h4");
+    descriptionWindow.innerHTML = "Description: ";
+    var descriptionText = document.createElement("span");
+    descriptionText.className = "conferenceSpan";
+    descriptionText.innerHTML = description || "";
+    descriptionWindow.appendChild(descriptionText);
+    //reviews
+    var reviewWindow = document.createElement("div");
+    //TODO function to loop through years and put reviews in
+    
+    //add to window
+    conferWindow.appendChild(nameWindow);
+    conferWindow.appendChild(acronymWindow);
+    conferWindow.appendChild(organizationWindow);
+    conferWindow.appendChild(lastEditedOnWindow);
+    conferWindow.appendChild(descriptionWindow);
+
+}
