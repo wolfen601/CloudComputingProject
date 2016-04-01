@@ -153,7 +153,7 @@ app.get('/guest', function(req, res){
 //start the application
 server.listen(port);
 console.log("Server running on 127.0.0.1:" + port);
-var cconferenceList = null;
+var conferenceList = null;
 database.getAllConferences(function(error, data){
     if(error){
         console.log(error);
@@ -287,7 +287,18 @@ io.on('connection', function (socket) {
         //conference data
         var conference = {"Acronym":data.name};
         database.getConference(conference, function(error, data){
+            //could not query conference by acronym, try querying by full name
             if(error){
+                database.getConferenceByName(conference,conferenceList, function(error, data){
+                    if(error){
+                        console.log(error);
+                    }
+                    else{
+                        // got conference returned
+                        var conference = data;
+                        io.sockets.in(user).emit('queryResult', { message: conference });
+                    }
+                });
                 console.log(error);
             }
             else{

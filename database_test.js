@@ -45,6 +45,27 @@ var accountData = {
     "Id":0
 };
 
+//var conferenceList = null;
+//database.getAllConferences(function(error, data){
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        conferenceList = data;
+//        database.getConferenceByName(conferenceData,conferenceList,function(error, data)
+//        {
+//            if(error){
+//                console.log(error);
+//            }
+//            else{
+//                // got conference returned
+//                var conference = data;
+//                console.log(conference);
+//            }
+//        });
+//    }
+//});
+
 ////insert all conferences into database
 ////after testing, only 616 conferences can be inserted before getting a throughput error (we are inserting to much, too quick)
 //for (var x = 0; x < conferences.length; x++){
@@ -115,6 +136,15 @@ var accountData = {
 //    }
 //});
 
+//database.addSecondaryIndex(function(error, data){
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        console.log(data);
+//    }
+//});
+
 //database.insertConference(conferenceData, function(error, data)
 //{
 //    if(error){
@@ -137,6 +167,18 @@ var accountData = {
 //});
 
 //database.getConference(conferenceData, function(error, data)
+//{
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        // got conference returned
+//        var conference = data;
+//        console.log(conference);
+//    }
+//});
+
+//database.getConferenceByName(conferenceData,conferenceList,function(error, data)
 //{
 //    if(error){
 //        console.log(error);

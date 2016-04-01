@@ -125,6 +125,24 @@ var getConference = function (conference, callback){
         });
 }
 
+var getConferenceByName = function(conference,conferenceList,callback){
+    var name = conference.FullName;
+    var data = null;
+    for (var x = 0; x < conferenceList.length; x++){
+        var conferenceInList = conferenceList[x];
+        if(conferenceInList.FullName == name){
+            data = conferenceInList;
+            break;
+        }
+    }
+    if (data == null)
+        callback("Did not find conference by name.",null);
+    else
+    //return conference
+        callback(null,data);
+
+}
+
 var getUser = function (user, callback){
     var params = {
         TableName: "Users",
@@ -244,12 +262,46 @@ var updateAccount = function(account,callback){
     });
 }
 
+var addSecondaryIndex = function(callback){
+    var params = {
+        TableName: "Conferences",
+        AttributeDefinitions:[
+            {AttributeName: "Name", AttributeType: "S"}
+        ],
+        GlobalSecondaryIndexUpdates: [
+            {
+                Create: {
+                    IndexName: "NameIndex",
+                    KeySchema: [
+                        {AttributeName: "Name", KeyType: "HASH"}
+                    ],
+                    Projection: {
+                        "ProjectionType": "ALL"
+                    },
+                    ProvisionedThroughput: {
+                        "ReadCapacityUnits": 1,"WriteCapacityUnits": 1
+                    }
+                }
+            }
+        ]
+    };
+
+    dynamodb.updateTable(params, function(err, data) {
+        if (err)
+            callback(JSON.stringify(err, null, 2));
+        else
+            callback(JSON.stringify(data, null, 2));
+    });
+}
+
 module.exports = {
     deleteTables: deleteTables,
     createTables: createTables,
+    addSecondaryIndex: addSecondaryIndex,
     insertConference: insertConference,
     insertUser: insertUser,
     getConference: getConference,
+    getConferenceByName: getConferenceByName,
     getUser: getUser,
     getAllConferences: getAllConferences,
     getAllUsers: getAllUsers,
