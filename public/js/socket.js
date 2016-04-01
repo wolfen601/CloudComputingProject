@@ -35,7 +35,8 @@ function editConf(confContents){
 }
 // get query information from search bar and emit search
 function searchConf(searchContents){
-  socket.emit('queryConference', { id : username, search: searchContents });
+    alert(searchContents);
+  socket.emit('queryConference', { id : username, name: searchContents });
 }
 
 /****************
@@ -43,33 +44,40 @@ function searchConf(searchContents){
 ****************/
 //TODO socket for creating review
 socket.on('createReviewResult', function(data){
-
+  var result = data.message;
+  alert("" + JSON.stringify(result));
 });
 //TODO socket for editting own review
 socket.on('editReviewResult', function(data){
-
+  var result = data.message;
+  alert("" + JSON.stringify(result));
 });
 //TODO socket for editting account info
 socket.on('editAccountResult', function(data){
-
+  var result = data.message;
+  alert("" + JSON.stringify(result));
 });
 //TODO socket for adding conference data
 socket.on('addConferenceResult', function(data){
-
+  var result = data.message;
+  alert("" + JSON.stringify(result));
 });
 //TODO socket for editting conference data
 socket.on('editConferenceResult', function(data){
-
+      var result = data.message;
+  alert("" + JSON.stringify(result));
 });
 //socket for searching for conferences
 socket.on('queryResult', function(data){
   var result = data.message;
   alert("" + JSON.stringify(result));
 });
+
+
 //initialize
 socket.on('initialize', function(data){
   var list = data.conferences;
-  alert('' + JSON.stringify(list));
+  //alert('' + JSON.stringify(list));
   //convert json to string array
   var conferenceNames = [];
   for (var i = 0; i < list.length; i++) {
@@ -81,5 +89,5 @@ socket.on('initialize', function(data){
   var awesomplete = new Awesomplete(input);
   awesomplete.minChars = 1;
   awesomplete.list = conferenceNames;
-  alert(conferenceNames);
+  //alert(conferenceNames);
 });
