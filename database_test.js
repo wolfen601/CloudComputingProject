@@ -237,3 +237,48 @@ var accountData = {
 //        console.log(user);
 //    }
 //});
+
+
+//
+//var conference = {"Acronym":"3DIM"};
+////review data
+//var review_edited = {
+//    "Year": "1993",
+//    "Review": [
+//        {
+//            "User": "Kevin",
+//            "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+//            "Rating": "3",
+//            "Details": "kay"
+//        }
+//    ]
+//};
+////get conference to edit review
+//
+//database.getConference(conference, function(error, data){
+//    if(error){
+//        console.log(error);
+//    }
+//    else{
+//        // got conference returned
+//        var conference = data;
+//        //reviews exist, edit review in reviews
+//        for(var x = 0; x < conference.Reviews.length; x++){
+//            var review = conference.Reviews[x];
+//            //if the year and the users are the same, update the conference with the edited review
+//            if(review.Year == review_edited.Year && review.Review.User == review_edited.Review.User){
+//                conference.Reviews[x] = review_edited;
+//                break;
+//            }
+//        }
+//        database.updateConference(conference, function(error, data){
+//            if(error){
+//                console.log(error);
+//            }
+//            else{
+//                //emit results
+//                console.log("Success");
+//            }
+//        });
+//    }
+//});

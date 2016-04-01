@@ -181,7 +181,7 @@ io.on('connection', function (socket) {
         //user
         var user = data.id;
         //conference name
-        var conference = {"Acronym":data.name};
+        var conference = {"Acronym":data.Acronym};
         //review data
         var review = data.review;
 
@@ -193,9 +193,9 @@ io.on('connection', function (socket) {
                 // got conference returned
                 var conference = data;
 
-                if (typeof conference.Review == 'undefined') {
+                if (typeof conference.Reviews == 'undefined') {
                     //no review are added
-                    conference.Review = [review];
+                    conference.Reviews = [review];
                 }
                 else{
                     //reviews exist, append
@@ -213,21 +213,42 @@ io.on('connection', function (socket) {
             }
         });
     });
-    //TODO edit reviews
+    //edit reviews
     socket.on('editReview', function(data){
         //user
         var user = data.id;
         //conference name
         var conference = {"Acronym":data.name};
         //review data
-        var review = data.review;
-        //TODO edit review to s3 object by getting object, editting info, store it
-        //TODO send new conference object as result after successful s3 insert
-
-
-
-        //emit results
-        io.sockets.in(user).emit('editReviewResult', { results: conference} );
+        var review_edited = data.review;
+        //get conference to edit review
+        database.getConference(conference, function(error, data){
+            if(error){
+                console.log(error);
+            }
+            else{
+                // got conference returned
+                var conference = data;
+                //reviews exist, edit review in reviews
+                for(var x = 0; x < conference.Reviews.length; x++){
+                    var review = conference.Reviews[x];
+                    //if the year and the users are the same, update the conference with the edited review
+                    if(review.Year == review_edited.Year && review.Review.User == review_edited.Review.User){
+                        conference.Reviews[x] = review_edited;
+                        break;
+                    }
+                }
+                database.updateConference(conference, function(error, data){
+                    if(error){
+                        console.log(error);
+                    }
+                    else{
+                        //emit results
+                        io.sockets.in(user).emit('editReviewResult', { results: conference} );
+                    }
+                });
+            }
+        });
     });
     //edit account
     socket.on('editAccount', function(data){
