@@ -102,8 +102,21 @@ function showConferences(data){
     var description = data.message.Description;
     var organization = data.message.Organization;
     var reviews = data.message.Reviews;
-    alert("" + fullname + " : " + acronym + " : " + lastEditedOn + " : " + description + " : " + organization + " : " + reviews);
+    //alert("" + fullname + " : " + acronym + " : " + lastEditedOn + " : " + description + " : " + organization + " : " + reviews);
+    
     //conference
+    
+    //containers
+    var containerHead = document.createElement("div");
+    containerHead.className = "panel panel-default";
+    var headClearfix = document.createElement("div");
+    headClearfix.className = "panel-heading clearfix";
+    var bodyCollapse = document.createElement("div");
+    bodyCollapse.className = "panel-collapse collapse";
+    var panelBody = document.createElement("div");
+    panelBody.className = "panel-body";
+    
+    //CONFERENCE HEADER
     //fullname
     var nameWindow = document.createElement("h4");
     nameWindow.innerHTML = "Conference Name: ";
@@ -139,21 +152,31 @@ function showConferences(data){
     descriptionText.className = "conferenceSpan";
     descriptionText.innerHTML = description || "";
     descriptionWindow.appendChild(descriptionText);
+    
+    headClearfix.appendChild(nameWindow);
+    headClearfix.appendChild(acronymWindow);
+    headClearfix.appendChild(organizationWindow);
+    headClearfix.appendChild(lastEditedOnWindow);
+    headClearfix.appendChild(descriptionWindow);
+    
+    //CONFERENCE REVIEWS
     //reviews
     var reviewsWindow = document.createElement("div");
     var reviewsText = document.createElement("span");
     reviewsText.innerHTML = "REVIEWS";
     reviewsWindow.appendChild(reviewsText);
     reviewsWindow.id = "reviews";
-    //add to window
-    conferWindow.appendChild(nameWindow);
-    conferWindow.appendChild(acronymWindow);
-    conferWindow.appendChild(organizationWindow);
-    conferWindow.appendChild(lastEditedOnWindow);
-    conferWindow.appendChild(descriptionWindow);
-    conferWindow.appendChild(reviewsWindow);
+
     //function to loop through years and put reviews in
     showReviews(reviews);
+    
+    //add to body
+    panelBody.appendChild(reviewsWindow);
+    bodyCollapse.appendChild(panelBody);
+    
+    containerHead.appendChild(headClearfix);
+    containerHead.appendChild(bodyCollapse);
+    conferWindow.appendChild(containerHead);
 }
 function showReviews(reviews){
   var reviewsWindow = document.getElementById('reviews');
