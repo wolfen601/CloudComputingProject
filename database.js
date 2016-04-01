@@ -194,7 +194,6 @@ var deleteConference = function (conference, callback){
     var params = {
         TableName: "Conferences",
         Key: {
-            "Id":conference.Id,
             "Acronym": conference.Acronym
         }
     };
@@ -211,7 +210,6 @@ var updateConference = function(conference,callback){
     var params = {
         TableName: "Conferences",
         Key: {
-            "Id":conference.Id,
             "Acronym": conference.Acronym
         }
     };
