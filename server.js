@@ -153,79 +153,18 @@ app.get('/guest', function(req, res){
 //start the application
 server.listen(port);
 console.log("Server running on 127.0.0.1:" + port);
-var date = new Date();
-var conferenceList = [
-    {
-        "Id":"123456",
-        "Name":"Test",
-        "Acronym":"Tt",
-        "OverallRating":"5"
-    },
-    {
-        "Id":"41",
-        "Name":"Kevin",
-        "Acronym":"Kn",
-        "OverallRating":"10"
-    },
-    {
-        "Id":"6365",
-        "Name":"Neil Sewardo",
-        "Acronym":"NSo",
-        "OverallRating":"3"
-    },
-    {
-        "Id":"234",
-        "Name":"Raab",
-        "Acronym":"Rbb",
-        "OverallRating":"6"
-    },
-    {
-        "Id":"7456",
-        "Name":"Confer",
-        "Acronym":"CD",
-        "OverallRating":"1"
-    },
-    {
-        "Id":"4325",
-        "Name":"World Wildlife Foundation",
-        "Acronym":"WWF",
-        "OverallRating":"10"
+var cconferenceList = null;
+database.getAllConferences(function(error, data){
+    if(error){
+        console.log(error);
     }
-];
-var conferenceData = {
-    "Id":"123456",
-    "Name":"Test",
-    "Acronym":"Tt",
-    "LastEditedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-    "Description":"This is a test conference.",
-    "OverallRating":4,
-    "Reviews":[
-        {
-            "Year": "2015",
-            "Review":
-                {
-                    "Id": "21424",
-                    "User": "Kevin",
-                    "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-                    "Rating": "5",
-                    "Details": "So bad"
-                }
+    else{
+        conferenceList = data;
+    }
+});
 
-        },
-        {
-            "Year": "2016",
-            "Review":
-                {
-                    "Id": "42135",
-                    "User": "Neil",
-                    "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-                    "Rating": "10",
-                    "Details": "Stepped it up"
-                }
 
-        }
-    ]
-};
+
 //on successful connection from client to server
 io.on('connection', function (socket) {
     //load user

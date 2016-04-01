@@ -56,7 +56,7 @@ var accountData = {
 //        }
 //        else{
 //            //successfully inserted
-//            console.log(data);
+//            console.log("Inserted: "+x+" conferences." );
 //        }
 //    });
 //
