@@ -41,6 +41,9 @@ function searchConf(searchContents){
 socket.on('createReviewResult', function(data){
   var result = data.results;
   //alert("" + JSON.stringify(result));
+  var totalReviewsDisplay = document.getElementById("totalReviewsDisplay");
+  var totalReviews = parseInt(totalReviewsDisplay.value || "0") + 1;
+  totalReviewsDisplay.value = totalReviews;
   showConferences(data.results);
 });
 //TODO socket for editting account info
@@ -69,8 +72,23 @@ socket.on('queryResult', function(data){
 
 //initialize
 socket.on('initialize', function(data){
+  //account info
+  var accountInfo = data.info;
+  var usernameDisplay = document.getElementById("usernameDisplay");
+  usernameDisplay.value = accountInfo.User;
+  var passwordDisplay = document.getElementById("passwordDisplay");
+  passwordDisplay.value = accountInfo.Password;
+  var lastLoggedInDisplay = document.getElementById("lastLoggedInDisplay");
+  lastLoggedInDisplay.value = accountInfo.LastLoggedIn;
+  //number of reviews
+  var numReviews = data.count;
+  var totalReviewsDisplay = document.getElementById("totalReviewsDisplay");
+  totalReviewsDisplay.value = numReviews;
+  //conference list
   var list = data.conferences;
-  //alert('' + JSON.stringify(list));
+  alert('' + JSON.stringify(accountInfo));
+  alert('' + JSON.stringify(numReviews));
+  alert('' + JSON.stringify(list));
   //convert json to string array
   var conferenceNames = [];
   for (var i = 0; i < list.length; i++) {

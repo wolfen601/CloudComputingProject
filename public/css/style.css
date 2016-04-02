@@ -211,6 +211,12 @@ div.modal div.modal-backdrop {
 	float: left;
 }
 
+#editAccountButton{
+	padding: 10px;
+	display:none;
+	float: left;
+}
+
 #addButton{
 	padding: 10px;
 	display:none;
