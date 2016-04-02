@@ -239,7 +239,7 @@ var updateAccount = function(account,callback){
     var params = {
         TableName: "Users",
         Key: {
-            "User": user.User
+            "User": account.User
         }
     };
 

@@ -388,8 +388,15 @@ io.on('connection', function (socket) {
     });
     //
     socket.on('logout', function(data){
-      var user = data.user;
-      //TODO update user account
+        var user = data.user;
+        database.updateAccount(user, function(error, data)        {
+            if(error){
+                console.log(error);
+            }
+            else{
+                console.log("Updated user.");
+            }
+        });
     });
 });
 
