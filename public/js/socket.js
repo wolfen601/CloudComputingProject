@@ -183,7 +183,7 @@ function showReviews(reviews){
       yearHeader.className = "panel-heading clearfix";
 
       var bodyCollapse = document.createElement("div");
-      bodyCollapse.className = "panel-collapse";
+      bodyCollapse.className = "panel-collapse collapse";
       var yearReviews = document.createElement("div");
       yearReviews.className = "panel-body";
 
@@ -246,6 +246,10 @@ function showReviews(reviews){
 
      //append reviews for each year
       bodyCollapse.appendChild(yearReviews);
+      bodyCollapse.id = reviews[i].Year;
+      
+      moreButton.setAttribute("data-target","#"+reviews[i].Year);
+      yearHeader.appendChild(moreButton);
       yearPanel.appendChild(yearHeader);
       yearPanel.appendChild(bodyCollapse);
       reviewsWindow.appendChild(yearPanel);

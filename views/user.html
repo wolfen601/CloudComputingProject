@@ -60,9 +60,12 @@
     </div>
 
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <!-- REVIEWS GO HERE -->
+        <div class="container">
+            <div id="home" class="tab-pane fade in active">
+                <!-- REVIEWS GO HERE -->
+            </div>
         </div>
+
     </div>
 
     <!--   ADD Review FORM     -->
@@ -126,10 +129,13 @@
     </div>
     <!-- FOOTER BUTTONS -->
     <footer>
-        <button id="editConfButton" class="btn btn-info" data-toggle="modal" data-target="#editConf" style="padding: 10px; display:none;">Edit Conference</button>
-        <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none;">Submit A Review</button>
+        <div class="container">
+            <div class="row">
+                <button id="editConfButton" class="btn btn-info" data-toggle="modal" data-target="#editConf" style="padding: 10px; display:none; float: left;">Edit Conference</button>
+                <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none; float:right; vertical-align: top;">Submit A Review</button>
+            </div>
+        </div>
     </footer>
-
 </body>
 
 </html>
