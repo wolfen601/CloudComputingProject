@@ -232,11 +232,17 @@ io.on('connection', function (socket) {
                 //reviews exist, edit review in reviews
                 for(var x = 0; x < conference.Reviews.length; x++){
                     var review = conference.Reviews[x];
-                    //if the year and the users are the same, update the conference with the edited review
-                    if(review.Year == review_edited.Year && review.Review.User == review_edited.Review.User){
-                        conference.Reviews[x] = review_edited;
-                        break;
+
+                    for(var y = 0; y < review.Review.length; y++){
+                        var reviewByYear = review.Review[y];
+                        //if the year and the users are the same, update the conference with the edited review
+
+                        if(reviewByYear.Year == review_edited.Year && reviewByYear.User == review_edited.Review.User){
+                            conference.Reviews[x].Review[y] = review_edited;
+                            break;
+                        }
                     }
+
                 }
                 database.updateConference(conference, function(error, data){
                     if(error){
@@ -244,7 +250,7 @@ io.on('connection', function (socket) {
                     }
                     else{
                         //emit results
-                        io.sockets.in(user).emit('editReviewResult', { results: conference} );
+                        console.log("Success");
                     }
                 });
             }

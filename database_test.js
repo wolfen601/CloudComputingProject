@@ -33,6 +33,12 @@ var conferenceData = {
                     "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
                     "Rating": "10",
                     "Details": "Stepped it up"
+                },
+                {
+                    "User": "Rob",
+                    "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+                    "Rating": "8",
+                    "Details": "Sub par"
                 }
             ]
         }
@@ -243,13 +249,13 @@ var accountData = {
 //var conference = {"Acronym":"3DIM"};
 ////review data
 //var review_edited = {
-//    "Year": "1993",
+//    "Year": "2016",
 //    "Review": [
 //        {
-//            "User": "Kevin",
+//            "User": "Rob",
 //            "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-//            "Rating": "3",
-//            "Details": "kay"
+//            "Rating": "6",
+//            "Details": "Meh. I could have done better"
 //        }
 //    ]
 //};
@@ -265,11 +271,17 @@ var accountData = {
 //        //reviews exist, edit review in reviews
 //        for(var x = 0; x < conference.Reviews.length; x++){
 //            var review = conference.Reviews[x];
-//            //if the year and the users are the same, update the conference with the edited review
-//            if(review.Year == review_edited.Year && review.Review.User == review_edited.Review.User){
-//                conference.Reviews[x] = review_edited;
-//                break;
+//
+//            for(var y = 0; y < review.Review.length; y++){
+//                var reviewByYear = review.Review[x];
+//                //if the year and the users are the same, update the conference with the edited review
+//
+//                if(reviewByYear.Year == review_edited.Year && reviewByYear.User == review_edited.Review.User){
+//                    conference.Reviews[x] = review_edited;
+//                    break;
+//                }
 //            }
+//
 //        }
 //        database.updateConference(conference, function(error, data){
 //            if(error){
