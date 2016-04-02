@@ -20,19 +20,15 @@ document.addEventListener("DOMContentLoaded", function() {
       var ratingInput = document.getElementById('submitRating').value;
       var details = document.getElementById('details').value;
       var reviewContents = {
-        "Reviews":[
-            {
-                "Year": date.getFullYear(),
-                "Review": [
-                    {
-                        "User": username,
-                        "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-                        "Rating": ratingInput,
-                        "Details": details
-                    }
-                ]
-            }
-        ]
+          "Year": date.getFullYear(),
+          "Review": [
+              {
+                  "User": username,
+                  "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+                  "Rating": ratingInput,
+                  "Details": details
+              }
+          ]
       };
       alert("" + JSON.stringify(reviewContents));
       createReview(acronymName, reviewContents);
