@@ -104,18 +104,6 @@ function showConferences(data){
     var reviews = data.message.Reviews;
     //alert("" + fullname + " : " + acronym + " : " + lastEditedOn + " : " + description + " : " + organization + " : " + reviews);
 
-    //conference
-
-    //containers
-    var containerHead = document.createElement("div");
-    containerHead.className = "panel panel-default";
-    var headClearfix = document.createElement("div");
-    headClearfix.className = "panel-heading clearfix";
-    var bodyCollapse = document.createElement("div");
-    bodyCollapse.className = "panel-collapse collapse";
-    var panelBody = document.createElement("div");
-    panelBody.className = "panel-body";
-
     //CONFERENCE HEADER
     //fullname
     var nameWindow = document.createElement("h4");
@@ -152,13 +140,7 @@ function showConferences(data){
     descriptionText.className = "conferenceSpan";
     descriptionText.innerHTML = description || "";
     descriptionWindow.appendChild(descriptionText);
-
-    headClearfix.appendChild(nameWindow);
-    headClearfix.appendChild(acronymWindow);
-    headClearfix.appendChild(organizationWindow);
-    headClearfix.appendChild(lastEditedOnWindow);
-    headClearfix.appendChild(descriptionWindow);
-
+    
     //CONFERENCE REVIEWS
     //reviews
     var reviewsWindow = document.createElement("div");
@@ -167,32 +149,58 @@ function showConferences(data){
     reviewsWindow.appendChild(reviewsText);
     reviewsWindow.id = "reviews";
 
+    conferWindow.appendChild(nameWindow);
+    conferWindow.appendChild(acronymWindow);
+    conferWindow.appendChild(organizationWindow);
+    conferWindow.appendChild(lastEditedOnWindow);
+    conferWindow.appendChild(descriptionWindow);
+    conferWindow.appendChild(reviewsWindow);
 
-
-    //add to body
-    panelBody.appendChild(reviewsWindow);
-    bodyCollapse.appendChild(panelBody);
-
-    containerHead.appendChild(headClearfix);
-    containerHead.appendChild(bodyCollapse);
-    conferWindow.appendChild(containerHead);
+    
+    
+    
+    
+    
 
     //function to loop through years and put reviews in
     showReviews(reviews);
 }
+
 function showReviews(reviews){
   var reviewsWindow = document.getElementById('reviews');
   if(reviews != undefined){
     for(var i = 0; i < reviews.length; i++){
       alert(reviews[i]);
+      
+        //containers for reviews
+        var yearPanel = document.createElement("div");
+        yearPanel.className = "panel panel-default";
+        
+        var yearHeader = document.createElement("div");
+        yearHeader.className = "panel-heading clearfix";    
+        
+        var bodyCollapse = document.createElement("div");
+        bodyCollapse.className = "panel-collapse";
+        var yearReviews = document.createElement("div");
+        yearReviews.className = "panel-body";
+        
+        //more button
+        var moreButton = document.createElement("button");
+        moreButton.className = "btn btn-default pull-right";
+        moreButton.setAttribute("type","button");
+        moreButton.setAttribute("data-toggle","collapse");
+        moreButton.innerHTML = "See Reviews";
+    
+      //SET YEAR WINDOW TO YEAR HEADER
       var yearWindow = document.createElement("div");
       yearWindow.innerHTML = "Year: ";
       var yearText = document.createElement("span");
       yearText.className = "reviewSpan";
       yearText.innerHTML = reviews[i].Year || "";
-      var yearReviews = document.createElement("div");
+     // var yearReviews = document.createElement("div");
       yearWindow.appendChild(yearText);
-
+      yearHeader.appendChild(yearWindow);
+      
       var reviewList = reviews[i].Review;
       for(var j = 0; j < reviewList.length; j++){
         var reviewWindow = document.createElement("div");
@@ -224,17 +232,20 @@ function showReviews(reviews){
         detailsText.className = "reviewSpan";
         detailsText.innerHTML = reviewList[j].Details || "";
         detailsWindow.appendChild(detailsText);
+    
         //review
         reviewWindow.appendChild(userWindow);
         reviewWindow.appendChild(createdOnWindow);
         reviewWindow.appendChild(ratingWindow);
         reviewWindow.appendChild(detailsWindow);
-        //add to the year
-        yearReviews.appendChild(reviewWindow);
       }
-      //append reviews for each year
-      yearWindow.appendChild(yearReviews);
-      reviewsWindow.appendChild(yearWindow);
+      yearReviews.appendChild(reviewWindow);
     }
+     //append reviews for each year
+      bodyCollapse.appendChild(yearReviews);
+      yearPanel.appendChild(yearHeader);
+      yearPanel.appendChild(bodyCollapse);
+    reviewsWindow.appendChild(yearPanel);  
   }
+
 }
