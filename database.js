@@ -308,6 +308,35 @@ var orderReviews = function(conference){
     return conference;
 }
 
+var numberOfReviews = function(account){
+    var count = 0;
+    var userName = account.User;
+    getAllConferences(function(error, data){
+        if(error){
+            console.log(error);
+        }
+        else{
+            var conferenceList = data;
+            //fml three nested loops
+            for(var x = 0; x < conferenceList.length; x++){
+                var conference = conferenceList[x];
+                if(typeof conference.Reviews != "undefined"){
+                    //reviews exist
+                    for(var y = 0; y < conference.Reviews.length; y++){
+                        for(var z = 0; z < conference.Reviews[y].Review.length; z++){
+                            if(conference.Reviews[y].Review[z].User.toLowerCase() == userName.toLowerCase()){
+                                //user in review match
+                                count++;
+                            }
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+    });
+}
+
 module.exports = {
     deleteTables: deleteTables,
     createTables: createTables,
@@ -322,7 +351,8 @@ module.exports = {
     deleteConference: deleteConference,
     updateConference: updateConference,
     updateAccount: updateAccount,
-    orderReviews : orderReviews
+    orderReviews : orderReviews,
+    numberOfReviews: numberOfReviews
 }
 
 

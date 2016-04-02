@@ -46,8 +46,8 @@ var conferenceData = {
 };
 
 var accountData = {
-    "User":"admin",
-    "Password":"root",
+    "User":"kevin",
+    "Password":"ho",
     "Id":0
 };
 
@@ -296,3 +296,5 @@ var accountData = {
 //});
 
 //database.orderReviews(conferenceData);
+
+//database.numberOfReviews(accountData);
