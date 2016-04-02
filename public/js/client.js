@@ -38,8 +38,10 @@ document.addEventListener("DOMContentLoaded", function() {
    var editConfButton = document.getElementById('submitEditConf');
    editConfButton.onclick = function(){
      var acronymName = document.getElementById('acronymName').innerHTML;
-     var organizationInput = document.getElementById('organization').value;
-     var descriptionInput = document.getElementById('description').value;
+     var organizationName = document.getElementById('organizationName').innerHTML;
+     var descriptionName = document.getElementById('descriptionName').innerHTML;
+     var organizationInput = document.getElementById('organization').value || organizationName ;
+     var descriptionInput = document.getElementById('description').value || descriptionName;
      var confContents = {
        "Description": descriptionInput,
        "Organization": organizationInput,

@@ -64,8 +64,9 @@ socket.on('addConferenceResult', function(data){
 });
 //TODO socket for editting conference data
 socket.on('editConferenceResult', function(data){
-      var result = data.message;
-  alert("" + JSON.stringify(result));
+  var result = data.results;
+  //alert("" + JSON.stringify(result));
+  showConferences(data.results);
 });
 //socket for searching for conferences
 socket.on('queryResult', function(data){
@@ -129,6 +130,7 @@ function showConferences(data){
     var organizationWindow = document.createElement("h4");
     organizationWindow.innerHTML = "Organization: ";
     var organizationText = document.createElement("span");
+    organizationText.id = "organizationName";
     organizationText.className = "conferenceSpan";
     organizationText.innerHTML = organization || "";
     organizationWindow.appendChild(organizationText);
@@ -143,6 +145,7 @@ function showConferences(data){
     var descriptionWindow = document.createElement("h4");
     descriptionWindow.innerHTML = "Description: ";
     var descriptionText = document.createElement("span");
+    descriptionText.id = "descriptionName";
     descriptionText.className = "conferenceSpan";
     descriptionText.innerHTML = description || "";
     descriptionWindow.appendChild(descriptionText);
