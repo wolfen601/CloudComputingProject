@@ -183,7 +183,7 @@ io.on('connection', function (socket) {
         //conference name
         var conference = {"Acronym":data.Acronym};
         //review data
-        var review = data.review;
+        var review = data.Reviews;
 
         database.getConference(conference, function(error, data){
             if(error){
@@ -193,13 +193,26 @@ io.on('connection', function (socket) {
                 // got conference returned
                 var conference = data;
 
+                //if no reviews exist
                 if (typeof conference.Reviews == 'undefined') {
-                    //no review are added
-                    conference.Reviews = [review];
+                    //no reviews are added, ignore year
+                    conference.Reviews.Review = [review];
                 }
                 else{
-                    //reviews exist, append
-                    conference.Reviews.push(review);
+                    //reviews exist, append to current year (if exists)
+                    var foundYear = false;
+                    for(var x = 0; x < conference.Reviews.length; x++){
+                        var existingReview = conference.Reviews[x];
+                        if(existingReview.Year == review.Year)
+                        {
+                            conference.Reviews[x].Review.append(review.Review);
+                            foundYear = true;
+                            break;
+                        }
+                    }
+                    if(foundYear == false){
+                        conference.Reviews.append(review);
+                    }
                 }
                 database.updateConference(conference, function(error, data){
                     if(error){
