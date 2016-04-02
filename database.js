@@ -81,6 +81,8 @@ var createTables = function(callback){
 }
 
 var insertConference = function (conference, callback){
+    conference = orderReviews(conference);
+
     var params = {
         TableName: "Conferences",
         Item: conference
@@ -292,6 +294,20 @@ var addSecondaryIndex = function(callback){
     });
 }
 
+function compare(a,b) {
+    if (a.Year < b.Year)
+        return -1;
+    else if (a.Year > b.Year)
+        return 1;
+    else
+        return 0;
+}
+
+var orderReviews = function(conference){
+    conference.Reviews.sort(compare);
+    return conference;
+}
+
 module.exports = {
     deleteTables: deleteTables,
     createTables: createTables,
@@ -305,7 +321,8 @@ module.exports = {
     getAllUsers: getAllUsers,
     deleteConference: deleteConference,
     updateConference: updateConference,
-    updateAccount: updateAccount
+    updateAccount: updateAccount,
+    orderReviews : orderReviews
 }
 
 
