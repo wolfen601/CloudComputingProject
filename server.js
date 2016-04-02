@@ -233,7 +233,7 @@ io.on('connection', function (socket) {
         //conference name
         var conference = {"Acronym":data.name};
         //review data
-        var review_edited = data.review;
+        var review_edited = data.Reviews;
         //get conference to edit review
         database.getConference(conference, function(error, data){
             if(error){
@@ -309,17 +309,31 @@ io.on('connection', function (socket) {
     socket.on('editConference', function(data){
         //user
         var user = data.id;
+        
         //conference data
-        var conference = {"Acronym":data.name};
-        database.updateConference(conference, function(error, data){
+        var conference = data.conference;
+        conference.Acronym = data.name;
+
+        database.getConference(conference, function(error, data){
+            //could not query conference by acronym, try querying by full name
             if(error){
                 console.log(error);
             }
             else{
-                //emit results
-                io.sockets.in(user).emit('editConferenceResult', { results: conference} );
+                // got conference returned
+                conference.Reviews = data.Reviews;
+                database.updateConference(conference, function(error, data){
+                    if(error){
+                        console.log(error);
+                    }
+                    else{
+                        //emit results
+                        io.sockets.in(user).emit('editConferenceResult', { results: conference} );
+                    }
+                });
             }
         });
+
     });
     //socket query
     socket.on('queryConference', function(data){
