@@ -65,6 +65,7 @@
         </div>
     </div>
 
+    <!--   ADD Review FORM     -->
     <div class="modal fade" id="addForm" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -99,11 +100,36 @@
             </div>
         </div>
     </div>
+    <!-- EDIT CONFERENCE FORM  -->
+    <div class="modal fade" id="editConf" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Edit Conference</h4>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="return false;">
+                        <label>Organization:</label>
+                        <input id="organization" name="organization" placeholder="IEEE" style="padding: 10px;" />
+                        <br>
+                        <label>Description:</label>
+                        <input id="description" name="description" placeholder="New Description" style="padding: 10px;" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitEditConf" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER BUTTONS -->
+    <footer>
+        <button id="editConfButton" class="btn btn-info" data-toggle="modal" data-target="#editConf" style="padding: 10px; display:none;">Edit Conference</button>
+        <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none;">Submit A Review</button>
+    </footer>
 
 </body>
-
-<footer>
-    <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none;">Submit A Review</button>
-</footer>
 
 </html>

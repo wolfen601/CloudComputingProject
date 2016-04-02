@@ -30,8 +30,8 @@ function addConf(confContents){
   socket.emit('addConference', { id : username, conference: confContents });
 }
 // socket for editting conference data
-function editConf(confContents){
-  socket.emit('editConference', { id : username, conference: confContents });
+function editConf(conferenceAcronym, confContents){
+  socket.emit('editConference', { id : username,  name: conferenceAcronym, conference: confContents });
 }
 // get query information from search bar and emit search
 function searchConf(searchContents){
@@ -43,8 +43,9 @@ function searchConf(searchContents){
 ****************/
 //TODO socket for creating review
 socket.on('createReviewResult', function(data){
-  var result = data.message;
-  alert("" + JSON.stringify(result));
+  var result = data.results;
+  //alert("" + JSON.stringify(result));
+  showConferences(data.results);
 });
 //TODO socket for editting own review
 socket.on('editReviewResult', function(data){
@@ -70,7 +71,7 @@ socket.on('editConferenceResult', function(data){
 socket.on('queryResult', function(data){
   var result = data.message;
   alert("" + JSON.stringify(result));
-  showConferences(data);
+  showConferences(data.message);
 });
 
 
@@ -93,16 +94,19 @@ socket.on('initialize', function(data){
 });
 function showConferences(data){
     var addButton = document.getElementById("addButton");
-    addButton.style.display = '';
+    addButton.style.display = 'block';
+    var editConfButton = document.getElementById("editConfButton");
+    editConfButton.style.display = 'block';
+
     var conferWindow = document.getElementById('home');
     conferWindow.innerHTML = "";
     //data
-    var fullname = data.message.FullName;
-    var acronym = data.message.Acronym;
-    var lastEditedOn = data.message.LastEditedOn;
-    var description = data.message.Description;
-    var organization = data.message.Organization;
-    var reviews = data.message.Reviews;
+    var fullname = data.FullName;
+    var acronym = data.Acronym;
+    var lastEditedOn = data.LastEditedOn;
+    var description = data.Description;
+    var organization = data.Organization;
+    var reviews = data.Reviews;
     //alert("" + fullname + " : " + acronym + " : " + lastEditedOn + " : " + description + " : " + organization + " : " + reviews);
 
     //CONFERENCE HEADER
@@ -166,7 +170,7 @@ function showReviews(reviews){
   var reviewsWindow = document.getElementById('reviews');
   if(reviews != undefined){
     for(var i = 0; i < reviews.length; i++){
-      alert(reviews[i]);
+      //alert(reviews[i]);
 
       //containers for reviews
       var yearPanel = document.createElement("div");

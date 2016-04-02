@@ -8,32 +8,46 @@ document.addEventListener("DOMContentLoaded", function() {
    //TODO account page interaction
 
    //TODO creating review
-
+   var addReview = document.getElementById('submitReview');
+   addReview.onclick = function(){
+     var acronymName = document.getElementById('acronymName').innerHTML;
+     var ratingInput = document.getElementById('submitRating').value;
+     var details = document.getElementById('details').value;
+     var reviewContents = {
+       "Year": date.getFullYear(),
+       "Review":
+         {
+             "User": username,
+             "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+             "Rating": ratingInput,
+             "Details": details
+         }
+     };
+     //alert("" + JSON.stringify(reviewContents));
+     createReview(acronymName, reviewContents);
+   };
    //TODO editting review
 
    //TODO editting account info
 
    //TODO adding conference data
-    var add = document.getElementById('submitReview');
-    add.onclick = function(){
-      var acronymName = document.getElementById('acronymName').innerHTML;
-      var ratingInput = document.getElementById('submitRating').value;
-      var details = document.getElementById('details').value;
-      var reviewContents = {
-        "Year": date.getFullYear(),
-        "Review":
-          {
-              "User": username,
-              "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
-              "Rating": ratingInput,
-              "Details": details
-          }
-      };
-      alert("" + JSON.stringify(reviewContents));
-      createReview(acronymName, reviewContents);
-    };
+
 
    //TODO editting conference data
+
+   var editConf = document.getElementById('submitEditConf');
+   editConf.onclick = function(){
+     var acronymName = document.getElementById('acronymName').innerHTML;
+     var organizationInput = document.getElementById('organization').value;
+     var descriptionInput = document.getElementById('description').value;
+     var confContents = {
+       "Description": descriptionInput,
+       "Organization": organizationInput,
+       "LastEditedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
+     };
+     //alert("" + JSON.stringify(confContents));
+     editConf(acronymName, confContents);
+   };
 
    //search
    var search = document.getElementById('submitSearch');
