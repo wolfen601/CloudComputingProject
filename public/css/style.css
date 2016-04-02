@@ -236,7 +236,7 @@ div.modal div.modal-backdrop {
 	width: 50%;
 }
 #searchBar{
-	width: 100%;
+	width: 90%;
 	padding: 10px;
 	vertical-align: top;
 }
@@ -257,4 +257,9 @@ div.modal div.modal-backdrop {
 
 #description{
 	padding: 10px;
+}
+
+/* ----------------- Misc --------------*/
+#backdrop{
+    background: #ffffff;
 }

@@ -75,9 +75,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     //logout
-    var logout = document.getElementById('logout');
-    logout.href = "/logout/" + username;
-    logout.onclick = function(){
+    var logoutElement = document.getElementById('logout');
+    logoutElement.href = "/logout/" + username;
+    logoutElement.onclick = function(){
       var usernameDisplay = document.getElementById("usernameDisplay").innerHTML;
       var passwordDisplay = document.getElementById("passwordDisplay").innerHTML;
       var userContents = {
