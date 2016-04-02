@@ -183,7 +183,7 @@ io.on('connection', function (socket) {
         //conference name
         var conference = {"Acronym":data.Acronym};
         //review data
-        var review = data.Reviews.pop();
+        var review = data.Reviews;
 
         database.getConference(conference, function(error, data){
             if(error){
