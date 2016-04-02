@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", function() {
      createReview(acronymName, reviewContents);
     };
     //TODO editting account info
-    // var submitEditAccount = document.getElementById('submitEditAccount');
-    // submitEditAccount.onclick = function(){
-    //   var passwordDisplay = document.getElementById('passwordDisplay').innerHTML;
-    //   var passwordInput = document.getElementById('password').value || passwordDisplay ;
-    //   var accountContents = {
-    //     "Password": passwordInput,
-    //     "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
-    //   };
-    //   //alert("" + JSON.stringify(confContents));
-    //   editAccount(accountContents);
-    // };
+    var submitEditAccount = document.getElementById('submitEditAccount');
+    submitEditAccount.onclick = function(){
+       var passwordDisplay = document.getElementById('passwordDisplay').innerHTML;
+       var passwordInput = document.getElementById('password').value || passwordDisplay ;
+       var accountContents = {
+         "Password": passwordInput,
+         "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
+       };
+       //alert("" + JSON.stringify(confContents));
+       editAccount(accountContents);
+    };
 
     //TODO adding conference data
 
