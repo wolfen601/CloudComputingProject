@@ -17,10 +17,6 @@ socket.emit('load', { username : username });
 function createReview(conferenceAcronym, reviewContents){
   socket.emit('createReview', { id : username, Acronym: conferenceAcronym, Reviews: reviewContents });
 }
-// socket for editting own review
-function editReview(conferenceName, reviewContents){
-  socket.emit('editReview', { id : username, name: conferenceName, review: reviewContents });
-}
 // socket for editting account info
 function editAccount(accountContents){
   socket.emit('editAccount', { id : username, account: accountContents });
@@ -46,11 +42,6 @@ socket.on('createReviewResult', function(data){
   var result = data.results;
   //alert("" + JSON.stringify(result));
   showConferences(data.results);
-});
-//TODO socket for editting own review
-socket.on('editReviewResult', function(data){
-  var result = data.message;
-  alert("" + JSON.stringify(result));
 });
 //TODO socket for editting account info
 socket.on('editAccountResult', function(data){
@@ -99,7 +90,7 @@ function showConferences(data){
     var editConfButton = document.getElementById("editConfButton");
     editConfButton.style.display = 'block';
 
-    var conferWindow = document.getElementById('home');
+    var conferWindow = document.getElementById('confArea');
     conferWindow.innerHTML = "";
     //data
     var fullname = data.FullName;
@@ -247,7 +238,7 @@ function showReviews(reviews){
      //append reviews for each year
       bodyCollapse.appendChild(yearReviews);
       bodyCollapse.id = reviews[i].Year;
-      
+
       moreButton.setAttribute("data-target","#"+reviews[i].Year);
       yearHeader.appendChild(moreButton);
       yearPanel.appendChild(yearHeader);

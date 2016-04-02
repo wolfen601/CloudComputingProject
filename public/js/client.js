@@ -26,8 +26,6 @@ document.addEventListener("DOMContentLoaded", function() {
      //alert("" + JSON.stringify(reviewContents));
      createReview(acronymName, reviewContents);
    };
-   //TODO editting review
-
    //TODO editting account info
 
    //TODO adding conference data

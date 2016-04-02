@@ -30,7 +30,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings
              <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#account">Account</a></li>
+                            <li><a data-toggle="tab" href="#account">Account</a></li>
                             <li>
                                 <a id="logout">
                                     <div id="logoutButton">Log Out</div>
@@ -63,6 +63,26 @@
         <div class="container">
             <div id="home" class="tab-pane fade in active">
                 <!-- REVIEWS GO HERE -->
+                <div id="confArea">
+
+                </div>
+                <!-- FOOTER BUTTONS -->
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <button id="editConfButton" class="btn btn-info" data-toggle="modal" data-target="#editConf" style="padding: 10px; display:none; float: left;">Edit Conference</button>
+                            <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none; float:right; vertical-align: top;">Submit A Review</button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <div id="account" class="tab-pane fade">
+              <div id="summary">
+                <h4>Username:  <span class="accountSpan" id="usernameDisplay"></span></h4>
+                <h4>Password:  <span class="accountSpan" id="passwordDisplay"></span></h4>
+                <h4>Last Logged In:  <span class="accountSpan" id="lastLoggedInDisplay"></span></h4>
+                <h4>Number of Reviews:  <span class="accountSpan" id="totalReviewsDisplay"></span></h4>
+              </div>
             </div>
         </div>
 
@@ -127,15 +147,7 @@
             </div>
         </div>
     </div>
-    <!-- FOOTER BUTTONS -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <button id="editConfButton" class="btn btn-info" data-toggle="modal" data-target="#editConf" style="padding: 10px; display:none; float: left;">Edit Conference</button>
-                <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none; float:right; vertical-align: top;">Submit A Review</button>
-            </div>
-        </div>
-    </footer>
+
 </body>
 
 </html>
