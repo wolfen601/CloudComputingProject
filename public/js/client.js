@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
    var date = new Date();
    //TODO account page interaction
 
-   //TODO creating review
+   //creating review
    var addReview = document.getElementById('submitReview');
    addReview.onclick = function(){
      var acronymName = document.getElementById('acronymName').innerHTML;
@@ -31,8 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
    //TODO adding conference data
 
 
-   //TODO editting conference data
-
+   //editting conference data
    var editConfButton = document.getElementById('submitEditConf');
    editConfButton.onclick = function(){
      var acronymName = document.getElementById('acronymName').innerHTML;
@@ -54,7 +53,11 @@ document.addEventListener("DOMContentLoaded", function() {
    search.onclick = function(){
      var searchInput = document.getElementById('searchBar');
      var searchContents = searchInput.value;
-     searchConf(searchContents);
+     if(searchContents == ""){
+       alert("No search entered.");
+     }else{
+       searchConf(searchContents);
+     }
    };
 
    //TODO other interactions

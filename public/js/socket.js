@@ -17,11 +17,11 @@ socket.emit('load', { username : username });
 function createReview(conferenceAcronym, reviewContents){
   socket.emit('createReview', { id : username, Acronym: conferenceAcronym, Reviews: reviewContents });
 }
-// socket for editting account info
+//TODO socket for editting account info
 function editAccount(accountContents){
   socket.emit('editAccount', { id : username, account: accountContents });
 }
-// socket for adding conference data
+//TODO socket for adding conference data
 function addConf(confContents){
   socket.emit('addConference', { id : username, conference: confContents });
 }
@@ -37,7 +37,7 @@ function searchConf(searchContents){
 /****************
 * Socket Reacts *
 ****************/
-//TODO socket for creating review
+//socket for creating review
 socket.on('createReviewResult', function(data){
   var result = data.results;
   //alert("" + JSON.stringify(result));
@@ -53,7 +53,7 @@ socket.on('addConferenceResult', function(data){
   var result = data.message;
   alert("" + JSON.stringify(result));
 });
-//TODO socket for editting conference data
+//socket for editting conference data
 socket.on('editConferenceResult', function(data){
   var result = data.results;
   //alert("" + JSON.stringify(result));
@@ -74,7 +74,7 @@ socket.on('initialize', function(data){
   //convert json to string array
   var conferenceNames = [];
   for (var i = 0; i < list.length; i++) {
-    conferenceNames.push(list[i].Name);
+    conferenceNames.push(list[i].FullName);
     conferenceNames.push(list[i].Acronym);
   }
   //load autofill

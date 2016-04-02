@@ -28,7 +28,7 @@
                     <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings
-             <span class="caret"></span></a>
+                          <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a data-toggle="tab" href="#account">Account</a></li>
                             <li>
@@ -43,14 +43,13 @@
         </div>
     </div>
 
-    <div class="container" style="background: #ffffff">
+    <div id="searchBarContainer" class="container">
         <!--Search bar-->
         <div class="row">
             <div id="taskBar">
-                <form class="searchForm" onsubmit="return false;" style="padding: 10px;">
-                    <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym" style="padding: 10px; vertical-align: top;"
-                    />
-                    <button id="submitSearch" class="btn btn-info" style="padding: 10px; vertical-align: top;">Search</button>
+                <form class="searchForm" onsubmit="return false;">
+                    <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym"/>
+                    <button id="submitSearch" class="btn btn-info">Search</button>
                 </form>
             </div>
         </div>
@@ -60,30 +59,32 @@
     </div>
 
     <div class="tab-content">
-        <div class="container">
-            <div id="home" class="tab-pane fade in active">
+        <div id="home" class="tab-pane fade in active">
+            <div class="container">
                 <!-- REVIEWS GO HERE -->
                 <div id="confArea">
 
                 </div>
                 <!-- FOOTER BUTTONS -->
-                <footer>
+                <footer id="confFooter">
                     <div class="container">
                         <div class="row">
-                            <button id="editConfButton" class="btn btn-info" data-toggle="modal" data-target="#editConf" style="padding: 10px; display:none; float: left;">Edit Conference</button>
-                            <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none; float:right; vertical-align: top;">Submit A Review</button>
+                            <button id="editConfButton" class="btn btn-info" data-toggle="modal" data-target="#editConf">Edit Conference</button>
+                            <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm">Submit A Review</button>
                         </div>
                     </div>
                 </footer>
             </div>
-            <div id="account" class="tab-pane fade">
-              <div id="summary">
-                <h4>Username:  <span class="accountSpan" id="usernameDisplay"></span></h4>
-                <h4>Password:  <span class="accountSpan" id="passwordDisplay"></span></h4>
-                <h4>Last Logged In:  <span class="accountSpan" id="lastLoggedInDisplay"></span></h4>
-                <h4>Number of Reviews:  <span class="accountSpan" id="totalReviewsDisplay"></span></h4>
-              </div>
+        </div>
+        <div id="account" class="tab-pane fade">
+          <div class="container">
+            <div id="accountSummary">
+              <h4>Username:  <span class="accountSpan" id="usernameDisplay"></span></h4>
+              <h4>Password:  <span class="accountSpan" id="passwordDisplay"></span></h4>
+              <h4>Last Logged In:  <span class="accountSpan" id="lastLoggedInDisplay"></span></h4>
+              <h4>Number of Reviews:  <span class="accountSpan" id="totalReviewsDisplay"></span></h4>
             </div>
+          </div>
         </div>
 
     </div>
@@ -113,7 +114,7 @@
                         </select>
                         <br>
                         <label>Comments:</label>
-                        <input id="details" name="details" placeholder="Details or Comments" style="padding: 10px;" />
+                        <input id="details" name="details" placeholder="Details or Comments"/>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -134,10 +135,10 @@
                 <div class="modal-body">
                     <form onsubmit="return false;">
                         <label>Organization:</label>
-                        <input id="organization" name="organization" placeholder="IEEE" style="padding: 10px;" />
+                        <input id="organization" name="organization" placeholder="IEEE" />
                         <br>
                         <label>Description:</label>
-                        <input id="description" name="description" placeholder="New Description" style="padding: 10px;" />
+                        <input id="description" name="description" placeholder="New Description" />
                     </form>
                 </div>
                 <div class="modal-footer">

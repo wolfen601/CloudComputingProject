@@ -202,3 +202,53 @@ header {
 div.modal div.modal-backdrop {
     z-index: 0;
 }
+
+
+/* ----------- Footers -----------------*/
+#editConfButton{
+	padding: 10px;
+	display:none;
+	float: left;
+}
+
+#addButton{
+	padding: 10px;
+	display:none;
+	float:right;
+	vertical-align: top;
+}
+
+/* ----------- TaskBar -----------------*/
+#searchBarContainer{
+	background: #ffffff;
+}
+.searchForm{
+	padding: 10px;
+	width: 100%;
+}
+.awesomplete{
+	width: 50%;\
+}
+#searchBar{
+	width: 100%;
+	padding: 10px;
+	vertical-align: top;
+}
+
+#submitSearch{
+	padding: 10px;
+	vertical-align: top;
+}
+
+/* ----------- Modals -----------------*/
+#details{
+	padding: 10px;
+}
+
+#organization{
+	padding: 10px;
+}
+
+#description{
+	padding: 10px;
+}
