@@ -309,18 +309,18 @@ io.on('connection', function (socket) {
     socket.on('editConference', function(data){
         //user
         var user = data.id;
-        
+
         //conference data
         var conference = data.conference;
         conference.Acronym = data.name;
 
         database.getConference(conference, function(error, data){
-            //could not query conference by acronym, try querying by full name
             if(error){
                 console.log(error);
             }
             else{
                 // got conference returned
+                conference.FullName = data.FullName;
                 conference.Reviews = data.Reviews;
                 database.updateConference(conference, function(error, data){
                     if(error){
