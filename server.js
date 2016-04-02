@@ -170,10 +170,34 @@ io.on('connection', function (socket) {
     //load user
     socket.on('load', function(data){
         //creates a private socket connection
-        var user = data.username;
+        var user = {"User":data.username};
         socket.join(data.username);
-        //initialize the user and send them a list of the conference names
-        io.sockets.in(user).emit('initialize', { conferences: conferenceList} );
+
+        database.getUser(user, function(error, data)
+        {
+            if(error){
+                console.log(error);
+            }
+            else{
+                // got account returned
+                var account = data;
+                var count = database.numberOfReviews(account,function(error,count){
+                    if(error){
+                        console.log(error);
+                    }
+                    else {
+                        //initialize the user and send them a list of the conference names
+                        io.sockets.in(user).emit('initialize', {
+                            conferences: conferenceList,
+                            info: account,
+                            count: count
+                        });
+                    }
+                });
+
+            }
+        });
+
     });
 
     //add reviews

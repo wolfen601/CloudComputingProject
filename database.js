@@ -308,12 +308,12 @@ var orderReviews = function(conference){
     return conference;
 }
 
-var numberOfReviews = function(account){
+var numberOfReviews = function(account,callback){
     var count = 0;
     var userName = account.User;
     getAllConferences(function(error, data){
         if(error){
-            console.log(error);
+            callback(error,null);
         }
         else{
             var conferenceList = data;
@@ -332,7 +332,7 @@ var numberOfReviews = function(account){
                     }
                 }
             }
-            return count;
+            callback(null,count);
         }
     });
 }
