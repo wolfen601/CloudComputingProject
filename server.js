@@ -183,7 +183,7 @@ io.on('connection', function (socket) {
         //conference name
         var conference = {"Acronym":data.Acronym};
         //review data
-        var review = data.Reviews.Reviews.pop();
+        var review = data.Reviews.pop();
 
         database.getConference(conference, function(error, data){
             if(error){
@@ -211,7 +211,7 @@ io.on('connection', function (socket) {
                         }
                     }
                     if(foundYear == false){
-                        conference.Reviews.append(review);
+                        conference.Reviews.push(review);
                     }
                 }
                 database.updateConference(conference, function(error, data){
