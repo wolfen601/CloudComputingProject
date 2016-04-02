@@ -52,8 +52,12 @@ socket.on('createReviewResult', function(data){
 });
 //TODO socket for editting account info
 socket.on('editAccountResult', function(data){
-  var result = data.message;
-  alert("" + JSON.stringify(result));
+  var result = data.results;
+  var passwordDisplay = document.getElementById("passwordDisplay");
+  passwordDisplay.innerHTML = result.Password;
+  var lastLoggedInDisplay = document.getElementById("lastLoggedInDisplay");
+  lastLoggedInDisplay.innerHTML = result.LastLoggedIn;
+  //alert("" + JSON.stringify(result));
 });
 //TODO socket for adding conference data
 socket.on('addConferenceResult', function(data){
@@ -69,7 +73,7 @@ socket.on('editConferenceResult', function(data){
 //socket for searching for conferences
 socket.on('queryResult', function(data){
   var result = data.message;
-  alert("" + JSON.stringify(result));
+  //alert("" + JSON.stringify(result));
   showConferences(data.message);
 });
 //initialize
@@ -88,9 +92,9 @@ socket.on('initialize', function(data){
   totalReviewsDisplay.innerHTML = numReviews || 0;
   //conference list
   var list = data.conferences;
-  alert('' + JSON.stringify(accountInfo));
-  alert('' + JSON.stringify(numReviews));
-  alert('' + JSON.stringify(list));
+  //alert('' + JSON.stringify(accountInfo));
+  //alert('' + JSON.stringify(numReviews));
+  //alert('' + JSON.stringify(list));
   //convert json to string array
   var conferenceNames = [];
   for (var i = 0; i < list.length; i++) {

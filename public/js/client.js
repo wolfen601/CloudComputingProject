@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
        var passwordDisplay = document.getElementById('passwordDisplay').innerHTML;
        var passwordInput = document.getElementById('password').value || passwordDisplay ;
        var accountContents = {
+         "User": username,
          "Password": passwordInput,
          "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
        };
