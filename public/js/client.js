@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
    //TODO editting conference data
 
-   var editConf = document.getElementById('submitEditConf');
-   editConf.onclick = function(){
+   var editConfButton = document.getElementById('submitEditConf');
+   editConfButton.onclick = function(){
      var acronymName = document.getElementById('acronymName').innerHTML;
      var organizationInput = document.getElementById('organization').value;
      var descriptionInput = document.getElementById('description').value;
