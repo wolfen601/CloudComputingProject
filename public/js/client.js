@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   //grab username from path using regex
    var username = window.location.pathname.match(/\/user\/(.*)$/)[1];
-
+   var date = new Date();
    //TODO account page interaction
 
    //TODO creating review
@@ -16,9 +16,26 @@ document.addEventListener("DOMContentLoaded", function() {
    //TODO adding conference data
     var add = document.getElementById('submitReview');
     add.onclick = function(){
-        var ratingInput = document.getElementById('submitRating')
-        var details = document.getElementById('details');
-        alert(ratingInput.value)
+      var acronymName = document.getElementById('acronymName').innerHTML;
+      var ratingInput = document.getElementById('submitRating').value;
+      var details = document.getElementById('details').value;
+      var reviewContents = {
+        "Reviews":[
+            {
+                "Year": date.getFullYear(),
+                "Review": [
+                    {
+                        "User": username,
+                        "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
+                        "Rating": ratingInput,
+                        "Details": details
+                    }
+                ]
+            }
+        ]
+      };
+      alert("" + JSON.stringify(reviewContents));
+      createReview(acronymName, reviewContents);
     };
 
    //TODO editting conference data
