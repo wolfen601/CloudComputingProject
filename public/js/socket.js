@@ -46,8 +46,8 @@ socket.on('createReviewResult', function(data){
   var result = data.results;
   //alert("" + JSON.stringify(result));
   var totalReviewsDisplay = document.getElementById("totalReviewsDisplay");
-  var totalReviews = parseInt(totalReviewsDisplay.value) + 1;
-  totalReviewsDisplay.value = totalReviews;
+  var totalReviews = parseInt(totalReviewsDisplay.innerHTML) + 1;
+  totalReviewsDisplay.innerHTML = totalReviews;
   showConferences(data.results);
 });
 //TODO socket for editting account info
