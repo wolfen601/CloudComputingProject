@@ -14,6 +14,12 @@ document.addEventListener("DOMContentLoaded", function() {
    //TODO editting account info
 
    //TODO adding conference data
+    var add = document.getElementById('submitReview');
+    add.onclick = function(){
+        var ratingInput = document.getElementById('submitRating')
+        var details = document.getElementById('details');
+        alert(ratingInput.value)
+    };
 
    //TODO editting conference data
 

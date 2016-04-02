@@ -197,3 +197,8 @@ header {
 #navigation{
 	float: right;
 }
+
+/* ------------ Modal styles and Fix ------------ */
+div.modal div.modal-backdrop {
+    z-index: 0;
+}

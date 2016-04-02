@@ -1,78 +1,109 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>CoCo Conference</title>
-      <meta charset="utf-8">
-      <link rel="stylesheet" href="../css/awesomplete.css" />
-      <script src="../js/awesomplete.min.js" async></script>
-      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="../css/style.css" />
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="../js/socket.js"></script>
-      <script src="../js/client.js"></script>
-   </head>
-   <body>
-     <header>
-       <h1>CoCo Conference
+
+<head>
+    <title>CoCo Conference</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/awesomplete.css" />
+    <script src="../js/awesomplete.min.js" async></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/socket.js"></script>
+    <script src="../js/client.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>CoCo Conference
          <small>Rate and share conferences easily!</small>
        </h1>
-     </header>
-     <div class="container">
-     <div class="row">
-     <div id="navigation">
-       <ul class="nav nav-tabs">
-         <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-         <li class="dropdown">
-           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings
+    </header>
+    <div class="container">
+        <div class="row">
+            <div id="navigation">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings
              <span class="caret"></span></a>
-             <ul class="dropdown-menu">
-               <li><a href="#account">Account</a></li>
-               <li><a id="logout"><div id="logoutButton">Log Out</div></a></li>
-             </ul>
-           </li>
-         </ul>
-     </div>
-   </div>
- </div>
-
-     <div class="container" style="background: #ffffff">
-         <!--Search bar-->
-       <div class="row">
-         <div class="container">
-           <div id="taskBar">
-             <form class="searchForm" onsubmit="return false;" style="padding: 10px;">
-                 <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym" style="padding: 10px; vertical-align: top;"/>
-                 <button id="submitSearch" class="btn btn-info" style="padding: 10px; vertical-align: top;">Search</button>
-             </form>
-           </div>
-         </div>
-       </div>
-
-       <!-- Conference results-->
-
+                        <ul class="dropdown-menu">
+                            <li><a href="#account">Account</a></li>
+                            <li>
+                                <a id="logout">
+                                    <div id="logoutButton">Log Out</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-
-     </div>
-
-     <div class="tab-content">
-       <div id="home" class="tab-pane fade in active">
-           
-         <div class="panel panel-default"> <!--YEAR PANEL -->
-             <div class="panel-heading clearfix"> <!-- YEAR HEADER -->
-                <h3>Our Approach</h3>
-                 <button type="button" class="btn btn-default pull-right" data-toggle="collapse-next">( ͡° ͜ʖ ͡°)</button>
-             </div>
-
-             <div class="panel-collapse collapse" id="body1"> <!-- BODY COLLAPSE --> 
-                  <div class="panel-body"> <!-- YEAR REVIEW -->
-                     Given the projects goals, my partner and I decided to start by brainstorming application ideas that would provide an opportunity to cover as many topics as possible. Originally we thought it would be a great idea to try and make a mobile interface to pair with another project we were working on, however we later decided that it would limit the amount of concepts we could cover. We then settled on the idea of creating an application that would calculate a user’s current grade in a course.
-                 </div>
-             </div>
-         </div>
-       </div>
     </div>
 
-   </body>
+    <div class="container" style="background: #ffffff">
+        <!--Search bar-->
+        <div class="row">
+            <div id="taskBar">
+                <form class="searchForm" onsubmit="return false;" style="padding: 10px;">
+                    <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym" style="padding: 10px; vertical-align: top;"
+                    />
+                    <button id="submitSearch" class="btn btn-info" style="padding: 10px; vertical-align: top;">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Conference results-->
+
+    </div>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <!-- REVIEWS GO HERE -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="addForm" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Submit a Review</h4>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="return false;">
+                        <label>Overall Rating:</label>
+                        <select id="submitRating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <br>
+                        <label>Comments:</label>
+                        <input id="details" name="details" placeholder="Details or Comments" style="padding: 10px;" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitReview" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<footer>
+    <button id="addButton" class="btn btn-success" data-toggle="modal" data-target="#addForm" style="padding: 10px; display:none;">Submit A Review</button>
+</footer>
+
 </html>

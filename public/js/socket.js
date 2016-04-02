@@ -92,7 +92,8 @@ socket.on('initialize', function(data){
   //alert(conferenceNames);
 });
 function showConferences(data){
-
+    var addButton = document.getElementById("addButton");
+    addButton.style.display = '';
     var conferWindow = document.getElementById('home');
     conferWindow.innerHTML = "";
     //data
@@ -139,7 +140,7 @@ function showConferences(data){
     var descriptionText = document.createElement("span");
     descriptionText.className = "conferenceSpan";
     descriptionText.innerHTML = description || "";
-    descriptionWindow.appendChild(descriptionText);
+    descriptionWindow.appendChild(descriptionText);    
     
     //CONFERENCE REVIEWS
     //reviews
@@ -155,13 +156,7 @@ function showConferences(data){
     conferWindow.appendChild(lastEditedOnWindow);
     conferWindow.appendChild(descriptionWindow);
     conferWindow.appendChild(reviewsWindow);
-
     
-    
-    
-    
-    
-
     //function to loop through years and put reviews in
     showReviews(reviews);
 }
@@ -170,37 +165,30 @@ function showReviews(reviews){
   var reviewsWindow = document.getElementById('reviews');
   if(reviews != undefined){
     for(var i = 0; i < reviews.length; i++){
-      alert(reviews[i]);
-      
-        //containers for reviews
-        var yearPanel = document.createElement("div");
-        yearPanel.className = "panel panel-default";
-        
-        var yearHeader = document.createElement("div");
-        yearHeader.className = "panel-heading clearfix";    
-        
-        var bodyCollapse = document.createElement("div");
-        bodyCollapse.className = "panel-collapse";
-        var yearReviews = document.createElement("div");
-        yearReviews.className = "panel-body";
-        
-        //more button
-        var moreButton = document.createElement("button");
-        moreButton.className = "btn btn-default pull-right";
-        moreButton.setAttribute("type","button");
-        moreButton.setAttribute("data-toggle","collapse");
-        moreButton.innerHTML = "See Reviews";
-    
+      //alert(reviews[i]);
+      //containers for reviews
+      var yearPanel = document.createElement("div");
+      yearPanel.className = "panel panel-default";
+      var yearHeader = document.createElement("div");
+      yearHeader.className = "panel-heading clearfix";    
+      var bodyCollapse = document.createElement("div");
+      bodyCollapse.className = "panel-collapse collapse";
+      var yearReviews = document.createElement("div");
+      yearReviews.className = "panel-body";
+      var moreButton = document.createElement("button");
+      moreButton.className = "btn btn-default pull-right";
+      moreButton.setAttribute("type","button");
+      moreButton.setAttribute("data-toggle","collapse");
+      moreButton.innerHTML = "See Reviews";
       //SET YEAR WINDOW TO YEAR HEADER
       var yearWindow = document.createElement("div");
       yearWindow.innerHTML = "Year: ";
       var yearText = document.createElement("span");
       yearText.className = "reviewSpan";
       yearText.innerHTML = reviews[i].Year || "";
-     // var yearReviews = document.createElement("div");
       yearWindow.appendChild(yearText);
       yearHeader.appendChild(yearWindow);
-      
+      yearHeader.appendChild(moreButton);
       var reviewList = reviews[i].Review;
       for(var j = 0; j < reviewList.length; j++){
         var reviewWindow = document.createElement("div");
@@ -232,20 +220,24 @@ function showReviews(reviews){
         detailsText.className = "reviewSpan";
         detailsText.innerHTML = reviewList[j].Details || "";
         detailsWindow.appendChild(detailsText);
-    
+        detailsWindow.appendChild(document.createElement("hr"));
         //review
         reviewWindow.appendChild(userWindow);
         reviewWindow.appendChild(createdOnWindow);
         reviewWindow.appendChild(ratingWindow);
         reviewWindow.appendChild(detailsWindow);
+        
+        yearReviews.appendChild(reviewWindow);
       }
-      yearReviews.appendChild(reviewWindow);
-    }
-     //append reviews for each year
+      //append reviews for each year
       bodyCollapse.appendChild(yearReviews);
+      bodyCollapse.id = reviews[i].Year;
+      moreButton.setAttribute("data-target","#"+reviews[i].Year);
       yearPanel.appendChild(yearHeader);
       yearPanel.appendChild(bodyCollapse);
-    reviewsWindow.appendChild(yearPanel);  
+      reviewsWindow.appendChild(yearPanel);  
+    }
+         
   }
 
 }
