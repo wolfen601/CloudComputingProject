@@ -213,7 +213,7 @@ div.modal div.modal-backdrop {
 
 #editAccountButton{
 	padding: 10px;
-	display:none;
+	display:block;
 	float: left;
 }
 
@@ -233,7 +233,7 @@ div.modal div.modal-backdrop {
 	width: 100%;
 }
 .awesomplete{
-	width: 50%;\
+	width: 50%;
 }
 #searchBar{
 	width: 100%;

@@ -33,6 +33,10 @@ function editConf(conferenceAcronym, confContents){
 function searchConf(searchContents){
   socket.emit('queryConference', { id : username, name: searchContents });
 }
+//logout
+function logout(userContents){
+  socket.emit('logout', { user : userContents });
+}
 
 /****************
 * Socket Reacts *
@@ -42,7 +46,7 @@ socket.on('createReviewResult', function(data){
   var result = data.results;
   //alert("" + JSON.stringify(result));
   var totalReviewsDisplay = document.getElementById("totalReviewsDisplay");
-  var totalReviews = parseInt(totalReviewsDisplay.value || "0") + 1;
+  var totalReviews = parseInt(totalReviewsDisplay.value) + 1;
   totalReviewsDisplay.value = totalReviews;
   showConferences(data.results);
 });
@@ -68,22 +72,20 @@ socket.on('queryResult', function(data){
   alert("" + JSON.stringify(result));
   showConferences(data.message);
 });
-
-
 //initialize
 socket.on('initialize', function(data){
   //account info
   var accountInfo = data.info;
   var usernameDisplay = document.getElementById("usernameDisplay");
-  usernameDisplay.value = accountInfo.User;
+  usernameDisplay.innerHTML = accountInfo.User;
   var passwordDisplay = document.getElementById("passwordDisplay");
-  passwordDisplay.value = accountInfo.Password;
+  passwordDisplay.innerHTML = accountInfo.Password;
   var lastLoggedInDisplay = document.getElementById("lastLoggedInDisplay");
-  lastLoggedInDisplay.value = accountInfo.LastLoggedIn;
+  lastLoggedInDisplay.innerHTML = accountInfo.LastLoggedIn;
   //number of reviews
   var numReviews = data.count;
   var totalReviewsDisplay = document.getElementById("totalReviewsDisplay");
-  totalReviewsDisplay.value = numReviews;
+  totalReviewsDisplay.innerHTML = numReviews || 0;
   //conference list
   var list = data.conferences;
   alert('' + JSON.stringify(accountInfo));
@@ -102,6 +104,7 @@ socket.on('initialize', function(data){
   awesomplete.list = conferenceNames;
   //alert(conferenceNames);
 });
+//show conferences
 function showConferences(data){
     var addButton = document.getElementById("addButton");
     addButton.style.display = 'block';

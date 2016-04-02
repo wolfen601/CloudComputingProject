@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", function() {
      createReview(acronymName, reviewContents);
     };
     //TODO editting account info
-    var submitEditAccount = document.getElementById('submitEditConf');
-    submitEditAccount.onclick = function(){
-      var passwordDisplay = document.getElementById('passwordDisplay').innerHTML;
-      var passwordInput = document.getElementById('password').value || passwordDisplay ;
-      var accountContents = {
-        "Password": passwordInput,
-        "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
-      };
-      //alert("" + JSON.stringify(confContents));
-      editAccount(accountContents);
-    };
+    // var submitEditAccount = document.getElementById('submitEditAccount');
+    // submitEditAccount.onclick = function(){
+    //   var passwordDisplay = document.getElementById('passwordDisplay').innerHTML;
+    //   var passwordInput = document.getElementById('password').value || passwordDisplay ;
+    //   var accountContents = {
+    //     "Password": passwordInput,
+    //     "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
+    //   };
+    //   //alert("" + JSON.stringify(confContents));
+    //   editAccount(accountContents);
+    // };
 
     //TODO adding conference data
 
@@ -77,5 +77,14 @@ document.addEventListener("DOMContentLoaded", function() {
     //logout
     var logout = document.getElementById('logout');
     logout.href = "/logout/" + username;
-
+    logout.onclick = function(){
+      var usernameDisplay = document.getElementById("usernameDisplay").innerHTML;
+      var passwordDisplay = document.getElementById("passwordDisplay").innerHTML;
+      var userContents = {
+        "User": usernameDisplay,
+        "Password": passwordDisplay,
+        "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
+      };
+      logout(userContents);
+    }
 });

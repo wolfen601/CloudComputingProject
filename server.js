@@ -187,7 +187,7 @@ io.on('connection', function (socket) {
                     }
                     else {
                         //initialize the user and send them a list of the conference names
-                        io.sockets.in(user).emit('initialize', {
+                        io.sockets.in(user.User).emit('initialize', {
                             conferences: conferenceList,
                             info: account,
                             count: count
@@ -384,8 +384,12 @@ io.on('connection', function (socket) {
                 var conference = data;
                 io.sockets.in(user).emit('queryResult', { message: conference });
             }
+        });
     });
-
+    //
+    socket.on('logout', function(data){
+      var user = data.user;
+      //TODO update user account
     });
 });
 
