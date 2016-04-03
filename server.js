@@ -188,11 +188,14 @@ io.on('connection', function (socket) {
                         console.log(error);
                     }
                     else {
+                        //compute analytics
+                        var url = getBarChartURL();
                         //initialize the user and send them a list of the conference names
                         io.sockets.in(user.User).emit('initialize', {
                             conferences: conferenceList,
                             info: account,
-                            count: count
+                            count: count,
+                            url: url
                         });
                     }
                 });
@@ -399,13 +402,6 @@ io.on('connection', function (socket) {
                 console.log("Updated user.");
             }
         });
-    });
-
-    //get average conference ratings and create bar plot
-    socket.on('analytics', function(data){
-        var user = data.user;
-        var url = getBarChartURL();
-        io.sockets.in(user).emit('analyticsResult', { message: url });
     });
 });
 
