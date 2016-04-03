@@ -14,6 +14,8 @@ var express = require('express'),
     socketIo = require('socket.io'),
     aws = require('aws-sdk'),
     path = require('path');
+//API for bar chart plotting
+var plotly = require('plotly')("sealneaward", "tt2lczxubi");
 var server = http.createServer(app);
 var database = require('./database.js');
 var io = socketIo.listen(server);
@@ -386,7 +388,7 @@ io.on('connection', function (socket) {
             }
         });
     });
-    //
+    //logout user
     socket.on('logout', function(data){
         var user = data.user;
         database.updateAccount(user, function(error, data)        {
@@ -397,6 +399,13 @@ io.on('connection', function (socket) {
                 console.log("Updated user.");
             }
         });
+    });
+
+    //get average conference ratings and create bar plot
+    socket.on('analytics', function(data){
+        var user = data.user;
+        var url = getBarChartURL();
+        io.sockets.in(user).emit('analyticsResult', { message: url });
     });
 });
 
@@ -425,5 +434,22 @@ function loadConferences(){
         else{
             conferenceList = data;
         }
+    });
+}
+
+function getBarChartURL(){
+    var url = null;
+    var data = [
+        {
+            x: ["giraffes", "orangutans", "monkeys"],
+            y: [20, 14, 23],
+            type: "bar"
+        }
+    ];
+    var graphOptions = {filename: "basic-bar", fileopt: "overwrite"};
+    plotly.plot(data, graphOptions, function (err, msg) {
+        url = msg.url + '.embed'
+        console.log(url);
+        return url;
     });
 }

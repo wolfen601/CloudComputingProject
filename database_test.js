@@ -46,12 +46,12 @@ var conferenceData = {
 };
 
 var accountData = {
-    "User":"kevin",
-    "Password":"ho",
+    "User":"neil",
+    "Password":"seward",
     "Id":0
 };
 
-//var conferenceList = null;
+////var conferenceList = null;
 //database.getAllConferences(function(error, data){
 //    if(error){
 //        console.log(error);
@@ -196,7 +196,7 @@ var accountData = {
 //    }
 //});
 
-//database.getUser(user, function(error, data)
+//database.getUser(accountData, function(error, data)
 //{
 //    if(error){
 //        console.log(error);
