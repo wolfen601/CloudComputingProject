@@ -15,13 +15,14 @@ document.addEventListener("DOMContentLoaded", function() {
       var details = document.getElementById('details').value;
       var reviewContents = {
         "Year": date.getFullYear(),
-        "Review":
+        "Review":[
          {
              "User": username,
              "CreatedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
              "Rating": ratingInput,
              "Details": details
          }
+        ]
      };
      //alert("" + JSON.stringify(reviewContents));
      createReview(acronymName, reviewContents);

@@ -222,7 +222,7 @@ io.on('connection', function (socket) {
                 //if no reviews exist
                 if (typeof conference.Reviews == 'undefined') {
                     //no reviews are added, ignore year
-                    conference.Reviews.Review = [review];
+                    conference.Reviews = [review];
                 }
                 else{
                     //reviews exist, append to current year (if exists)
@@ -231,7 +231,7 @@ io.on('connection', function (socket) {
                         var existingReview = conference.Reviews[x];
                         if(existingReview.Year == review.Year)
                         {
-                            conference.Reviews[x].Review.push(review.Review);
+                            conference.Reviews[x].Review.push(review.Review.pop());
                             foundYear = true;
                             break;
                         }
@@ -526,6 +526,9 @@ function graphUserRatings(callback){
                         ];
                         var layout = {
                             title: 'Average Rating Per User',
+                            autosize: false,
+                            height: 500,
+                            width: 750,
                             xaxis: {
                                 title: 'User Name',
                                 titlefont: {
@@ -586,6 +589,9 @@ function graphConferences(callback){
                 ];
                 var layout = {
                     title: 'Average Rating Per Conference',
+                    autosize: false,
+                    height: 500,
+                    width: 750,
                     xaxis: {
                         title: 'Conference Name',
                         titlefont: {

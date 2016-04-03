@@ -187,7 +187,7 @@ var getAllUsers = function (callback){
             callback(err,null);
         else
         //return users
-            callback(null,JSON.stringify(data, null, 2));
+            callback(null,data.Items);
     });
 }
 

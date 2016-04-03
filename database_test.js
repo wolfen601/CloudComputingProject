@@ -8,7 +8,7 @@ var user = users[0];
 // cannot insert Name column (specially reserved)
 var conferenceData = {
     "Id":conference.Id,
-    "Acronym":conference.Acronym,
+    "Acronym":"3DUI",
     "FullName":conference.FullName,
     "LastEditedOn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear(),
     "Description":"This is a test conference.",
