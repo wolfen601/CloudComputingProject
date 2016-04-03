@@ -465,8 +465,13 @@ function getBarChartURL(callback){
                 ];
                 var graphOptions = {filename: "basic-bar", fileopt: "overwrite"};
                 plotly.plot(data, graphOptions, function (err, msg) {
-                    var url = msg.url + '.embed'
-                    callback(url);
+                    if(err){
+                        console.log(err);
+                    }
+                    else {
+                        var url = msg.url + '.embed'
+                        callback(url);
+                    }
                 });
             });
         }
