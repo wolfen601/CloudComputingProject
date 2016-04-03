@@ -8,7 +8,7 @@ var username = window.location.pathname.match(/\/user\/(.*)$/)[1];
 var socket  = io.connect();
 //tell server to initialize this client
 socket.emit('load', { username : username });
-socket.emit('analytics', { user : username});
+//socket.emit('analytics', { user : username});
 
 /***************
 * Socket Emits *
@@ -125,7 +125,10 @@ function showConferences(data){
     addButton.style.display = 'block';
     var editConfButton = document.getElementById("editConfButton");
     editConfButton.style.display = 'block';
-
+    
+    var titleWindow = document.getElementById('nameBox');
+    titleWindow.innerHTML = "";
+    titleWindow.style.display = "block";
     var conferWindow = document.getElementById('confArea');
     conferWindow.innerHTML = "";
     //data
@@ -185,11 +188,11 @@ function showConferences(data){
     reviewsWindow.appendChild(reviewsText);
     reviewsWindow.id = "reviews";
 
-    conferWindow.appendChild(nameWindow);
-    conferWindow.appendChild(acronymWindow);
-    conferWindow.appendChild(organizationWindow);
-    conferWindow.appendChild(lastEditedOnWindow);
-    conferWindow.appendChild(descriptionWindow);
+    titleWindow.appendChild(nameWindow);
+    titleWindow.appendChild(acronymWindow);
+    titleWindow.appendChild(organizationWindow);
+    titleWindow.appendChild(lastEditedOnWindow);
+    titleWindow.appendChild(descriptionWindow);
     conferWindow.appendChild(reviewsWindow);
 
     //function to loop through years and put reviews in
