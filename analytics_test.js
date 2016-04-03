@@ -1,37 +1,43 @@
 var plotly = require('plotly')("sealneaward", "tt2lczxubi");
 var database = require('./database.js');
 
-//database.getAllConferences(function(error, conferenceList){
-//    if(error){
-//        console.log(error);
-//    }
-//    else{
-//        getAverageRatings(conferenceList,function(conferenceList){
-//            var names = [];
-//            var ratings = [];
-//            for(var x = 0; x < conferenceList.length; x++){
-//                var conference = conferenceList[x];
-//                names.push(conference.Acronym);
-//                ratings.push(conference.AverageRating);
-//            }
-//
-//
-//            var data = [
-//                {
-//                    x: names,
-//                    y: ratings,
-//                    type: "bar"
-//                }
-//            ];
-//            var graphOptions = {filename: "basic-bar", fileopt: "overwrite"};
-//            plotly.plot(data, graphOptions, function (err, msg) {
-//                var url = msg.url + '.embed'
-//                console.log(url);
-//
-//            });
-//        });
-//    }
-//});
+database.getAllConferences(function(error, conferenceList){
+    if(error){
+        console.log(error);
+    }
+    else{
+        getAverageRatings(conferenceList,function(conferenceList){
+            var names = [];
+            var ratings = [];
+            for(var x = 0; x < conferenceList.length; x++){
+                var conference = conferenceList[x];
+                names.push(conference.Acronym);
+                ratings.push(conference.AverageRating);
+            }
+
+
+            var data = [
+                {
+                    x: names,
+                    y: ratings,
+                    type: "bar"
+                }
+            ];
+            var graphOptions = {filename: "conferences", fileopt: "overwrite"};
+            plotly.plot(data, graphOptions, function (err, msg) {
+                if(err){
+                    console.log(err);
+                }
+                else {
+                    var url = msg.url + '.embed'
+                    //callback(url);
+                    console.log(url);
+                }
+
+            });
+        });
+    }
+});
 
 
 database.getAllConferences(function(error, conferenceList){
@@ -61,7 +67,26 @@ database.getAllConferences(function(error, conferenceList){
                             type: "bar"
                         }
                     ];
-                    var graphOptions = {filename: "basic-bar", fileopt: "overwrite"};
+                    var layout = {
+                        title: 'Average Rating Per User',
+                        xaxis: {
+                            title: 'User Name',
+                            titlefont: {
+                                family: 'Courier New, monospace',
+                                size: 18,
+                                color: '#7f7f7f'
+                            }
+                        },
+                        yaxis: {
+                            title: 'Averate Rating Given',
+                            titlefont: {
+                                family: 'Courier New, monospace',
+                                size: 18,
+                                color: '#7f7f7f'
+                            }
+                        }
+                    };
+                    var graphOptions = {layout: layout, filename: "styling-names", fileopt: "overwrite"};
                     plotly.plot(data, graphOptions, function (err, msg) {
                         if(err){
                             console.log(error);
