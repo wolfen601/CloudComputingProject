@@ -405,6 +405,7 @@ io.on('connection', function (socket) {
     socket.on('analytics', function(data){
         var user = data.user;
         getBarChartURL(function(url){
+            console.log(url);
             io.sockets.in(user).emit('analyticsResult', { message: url });
         });
 
@@ -440,30 +441,56 @@ function loadConferences(){
 }
 
 function getBarChartURL(callback){
-    var url = null;
-    var data = [
-        {
-            x: ["giraffes", "orangutans", "monkeys"],
-            y: [20, 14, 23],
-            type: "bar"
+    database.getAllConferences(function(error, conferenceList){
+        if(error){
+            console.log(error);
         }
-    ];
-    var layout = {
-      autosize: false,
-      height: 500,
-      width: 500,
-      margin: {
-        l: 50,
-        r: 50,
-        b: 100,
-        t: 100,
-        pad: 4
-      },
-    };
-    var graphOptions = {layout: layout, filename: "basic-bar", fileopt: "overwrite"};
-    plotly.plot(data, graphOptions, function (err, msg) {
-        url = msg.url + '.embed'
-        console.log(url);
-        callback(url);
+        else{
+            getAverageRatings(conferenceList,function(conferenceList){
+                var names = [];
+                var ratings = [];
+                for(var x = 0; x < conferenceList.length; x++){
+                    var conference = conferenceList[x];
+                    names.push(conference.Acronym);
+                    ratings.push(conference.AverageRating);
+                }
+
+
+                var data = [
+                    {
+                        x: names,
+                        y: ratings,
+                        type: "bar"
+                    }
+                ];
+                var graphOptions = {filename: "basic-bar", fileopt: "overwrite"};
+                plotly.plot(data, graphOptions, function (err, msg) {
+                    var url = msg.url + '.embed'
+                    callback(url);
+                });
+            });
+        }
     });
+}
+
+function getAverageRatings(conferenceList, callback){
+    var conferencesWithRating = [];
+    for(var x = 0; x < conferenceList.length; x++){
+        var conference = conferenceList[x];
+        var count = 0;
+        var totRating = 0;
+        if(typeof conference.Reviews != "undefined"){
+            //reviews exist
+            for(var y = 0; y < conference.Reviews.length; y++){
+                for(var z = 0; z < conference.Reviews[y].Review.length; z++){
+                    count++;
+                    totRating += parseInt(conference.Reviews[y].Review[z].Rating);
+                }
+            }
+            //calculate average;
+            conference.AverageRating = totRating/count;
+            conferencesWithRating.push(conference);
+        }
+    }
+    callback(conferencesWithRating);
 }
