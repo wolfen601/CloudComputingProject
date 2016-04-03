@@ -8,7 +8,7 @@ var username = window.location.pathname.match(/\/user\/(.*)$/)[1];
 var socket  = io.connect();
 //tell server to initialize this client
 socket.emit('load', { username : username });
-//socket.emit('analytics', { user : username});
+socket.emit('analytics', { user : username});
 
 /***************
 * Socket Emits *
@@ -80,12 +80,20 @@ socket.on('queryResult', function(data){
 socket.on('analyticsResult', function(data){
   //analytics url
   //alert("" + data.message);
-  var url = data.message;
+  var conferenceUrl = data.conferenceGraph;
+  var userUrl = data.userGraph;
   var analyticsWindow = document.getElementById("analyticsWindow");
-  var graph = document.createElement("iframe");
-  graph.id = "barGraph";
-  graph.src = url;
-  analyticsWindow.appendChild(graph);
+
+  var conferenceGraph = document.createElement("iframe");
+  conferenceGraph.id = "conferenceGraph";
+  conferenceGraph.src = conferenceUrl;
+
+  var userGraph = document.createElement("iframe");
+  userGraph.id = "userGraph";
+  userGraph.src = userUrl;
+
+  analyticsWindow.appendChild(conferenceGraph);
+  analyticsWindow.appendChild(userGraph);
 });
 //initialize
 socket.on('initialize', function(data){
@@ -125,7 +133,7 @@ function showConferences(data){
     addButton.style.display = 'block';
     var editConfButton = document.getElementById("editConfButton");
     editConfButton.style.display = 'block';
-    
+
     var titleWindow = document.getElementById('nameBox');
     titleWindow.innerHTML = "";
     titleWindow.style.display = "block";
