@@ -448,7 +448,19 @@ function getBarChartURL(callback){
             type: "bar"
         }
     ];
-    var graphOptions = {filename: "basic-bar", fileopt: "overwrite"};
+    var layout = {
+      autosize: false,
+      height: 500,
+      width: 500,
+      margin: {
+        l: 50,
+        r: 50,
+        b: 100,
+        t: 100,
+        pad: 4
+      },
+    };
+    var graphOptions = {layout: layout, filename: "basic-bar", fileopt: "overwrite"};
     plotly.plot(data, graphOptions, function (err, msg) {
         url = msg.url + '.embed'
         console.log(url);
