@@ -8,7 +8,7 @@ var username = window.location.pathname.match(/\/user\/(.*)$/)[1];
 var socket  = io.connect();
 //tell server to initialize this client
 socket.emit('load', { username : username });
-
+socket.emit('analytics', { username : username});
 
 /***************
 * Socket Emits *
@@ -75,6 +75,16 @@ socket.on('queryResult', function(data){
   var result = data.message;
   //alert("" + JSON.stringify(result));
   showConferences(data.message);
+});
+//analytics
+socket.on('analyticsResult', function(data){
+  //analytics url
+  alert("" + data.analytics);
+  var url = data.analytics;
+  var analyticsWindow = document.getElementById("barGraphs");
+  var graph = document.createElement("iframe");
+  graph.src = url;
+  analyticsWindow.appendChild(graph);
 });
 //initialize
 socket.on('initialize', function(data){
