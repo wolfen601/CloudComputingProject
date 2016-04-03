@@ -188,14 +188,11 @@ io.on('connection', function (socket) {
                         console.log(error);
                     }
                     else {
-                        //compute analytics
-                        var url = getBarChartURL();
                         //initialize the user and send them a list of the conference names
                         io.sockets.in(user.User).emit('initialize', {
                             conferences: conferenceList,
                             info: account,
-                            count: count,
-                            url: url
+                            count: count
                         });
                     }
                 });
@@ -403,6 +400,15 @@ io.on('connection', function (socket) {
             }
         });
     });
+
+    //get average conference ratings and create bar plot
+    socket.on('analytics', function(data){
+        var user = data.user;
+        getBarChartURL(function(url){
+            io.sockets.in(user).emit('analyticsResult', { message: url });
+        });
+
+    });
 });
 
 //adds new user to database
@@ -433,7 +439,7 @@ function loadConferences(){
     });
 }
 
-function getBarChartURL(){
+function getBarChartURL(callback){
     var url = null;
     var data = [
         {
@@ -446,6 +452,6 @@ function getBarChartURL(){
     plotly.plot(data, graphOptions, function (err, msg) {
         url = msg.url + '.embed'
         console.log(url);
-        return url;
+        callback(url);
     });
 }
