@@ -40,7 +40,6 @@ var conferenceList = {};
  *******************/
 var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXX";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXX";
-var s3bucket = process.env.S3_BUCKET || "xxxxxxx";
 var table = "Users";
 //aws.config.update({
 //  accessKeyId: accessKeyId,
@@ -53,14 +52,6 @@ aws.config.loadFromPath('aws-config.json');
 var docClient = new aws.DynamoDB.DocumentClient({
     params: {
         endpoint:  "https://dynamodb.us-west-2.amazonaws.com"
-    }
-});
-
-// //set the desired s3 bucket to use
-var s3 = new aws.S3({
-    params: {
-        Bucket: s3bucket,
-        endpoint:  "https://s3.us-west-2.amazonaws.com"
     }
 });
 
@@ -222,7 +213,7 @@ io.on('connection', function (socket) {
                 //if no reviews exist
                 if (typeof conference.Reviews == 'undefined') {
                     //no reviews are added, ignore year
-                    conference.Reviews = [review];
+                    conference.Reviews.Review = [review];
                 }
                 else{
                     //reviews exist, append to current year (if exists)
@@ -231,7 +222,7 @@ io.on('connection', function (socket) {
                         var existingReview = conference.Reviews[x];
                         if(existingReview.Year == review.Year)
                         {
-                            conference.Reviews[x].Review.push(review.Review.pop());
+                            conference.Reviews[x].Review.push(review.Review);
                             foundYear = true;
                             break;
                         }
@@ -526,9 +517,6 @@ function graphUserRatings(callback){
                         ];
                         var layout = {
                             title: 'Average Rating Per User',
-                            autosize: false,
-                            height: 500,
-                            width: 750,
                             xaxis: {
                                 title: 'User Name',
                                 titlefont: {
@@ -544,7 +532,10 @@ function graphUserRatings(callback){
                                     size: 18,
                                     color: '#7f7f7f'
                                 }
-                            }
+                            },
+                            autosize: false,
+                            height: 500,
+                            width: 750
                         };
                         var graphOptions = {layout: layout, filename: "styling-names", fileopt: "overwrite"};
                         plotly.plot(data, graphOptions, function (err, msg) {
@@ -589,9 +580,6 @@ function graphConferences(callback){
                 ];
                 var layout = {
                     title: 'Average Rating Per Conference',
-                    autosize: false,
-                    height: 500,
-                    width: 750,
                     xaxis: {
                         title: 'Conference Name',
                         titlefont: {
@@ -607,7 +595,10 @@ function graphConferences(callback){
                             size: 18,
                             color: '#7f7f7f'
                         }
-                    }
+                    },
+                    autosize: false,
+                    height: 500,
+                    width: 750
                 };
                 var graphOptions = {layout:layout,filename: "conferences", fileopt: "overwrite"};
                 plotly.plot(data, graphOptions, function (err, msg) {
