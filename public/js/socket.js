@@ -57,6 +57,8 @@ socket.on('editAccountResult', function(data){
   passwordDisplay.innerHTML = result.Password;
   var lastLoggedInDisplay = document.getElementById("lastLoggedInDisplay");
   lastLoggedInDisplay.innerHTML = result.LastLoggedIn;
+  var successfulChange = document.getElementById("successPasswordChange");
+  successfulChange.style.display = "block";
   //alert("" + JSON.stringify(result));
 });
 //TODO socket for adding conference data

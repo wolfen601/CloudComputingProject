@@ -30,17 +30,32 @@ document.addEventListener("DOMContentLoaded", function() {
     //TODO editting account info
     var submitEditAccount = document.getElementById('submitEditAccount');
     submitEditAccount.onclick = function(){
-       var passwordDisplay = document.getElementById('passwordDisplay').innerHTML;
-       var passwordInput = document.getElementById('password').value || passwordDisplay ;
-       var accountContents = {
-         "User": username,
-         "Password": passwordInput,
-         "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
-       };
-       //alert("" + JSON.stringify(confContents));
-       editAccount(accountContents);
+      var passwordDisplay = document.getElementById('passwordDisplay').innerHTML;
+      var warning = document.getElementById('warning');
+      var oldPasswordInput = document.getElementById('oldPassword').value;
+      var newPasswordInput = document.getElementById('newPassword').value;
+      var confirmPasswordInput = document.getElementById('confirmPassword').value;
+      if(oldPasswordInput == "" || newPasswordInput == "" || confirmPasswordInput == ""){
+       warning.innerHTML = "Please enter a value in all fields.";
+      }else{
+        if(passwordDisplay == oldPasswordInput){
+          if(newPasswordInput == confirmPasswordInput){
+           var accountContents = {
+             "User": username,
+             "Password": newPasswordInput,
+             "LastLoggedIn": date.getDate()  + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear()
+           };
+           //alert("" + JSON.stringify(confContents));
+           $('#editAccount').modal('toggle');
+           editAccount(accountContents);
+         }else{
+           warning.innerHTML = "New passwords do not match.";
+         }
+       }else{
+         warning.innerHTML = "Old password does not match.";
+       }
+      }
     };
-
     //TODO adding conference data
 
 

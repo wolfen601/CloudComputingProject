@@ -96,8 +96,9 @@
         <div id="account" class="tab-pane fade">
             <div class="container" style="background-color: #ffffff;">
                 <div id="accountSummary">
+                    <div id="successPasswordChange">Successfully changed password.</div>
                     <h4>Username:  <span class="accountSpan" id="usernameDisplay"></span></h4>
-                    <h4>Password:  <span class="accountSpan" id="passwordDisplay"></span></h4>
+                    <h4 id="currPassword">Password:  <span class="accountSpan" id="passwordDisplay"></span></h4>
                     <h4>Last Logged In:  <span class="accountSpan" id="lastLoggedInDisplay"></span></h4>
                     <h4>Number of Reviews:  <span class="accountSpan" id="totalReviewsDisplay"></span></h4>
                 </div>
@@ -181,13 +182,20 @@
                     <h4 class="modal-title">Edit Account</h4>
                 </div>
                 <div class="modal-body">
+                    <div id="warning"></div>
                     <form onsubmit="return false;">
-                        <label>Password:</label>
-                        <input id="password" name="password" />
+                      <label>Old Password:</label>
+                      <input id="oldPassword" name="password" />
+                      <br>
+                      <label>New Password:</label>
+                      <input id="newPassword" name="password" />
+                      <br>
+                      <label>Confirm New Password:</label>
+                      <input id="confirmPassword" name="password" />
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="submitEditAccount" class="btn btn-primary" data-dismiss="modal">Save</button>
+                    <button type="button" id="submitEditAccount" class="btn btn-primary">Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
