@@ -1,7 +1,9 @@
 var aws = require('aws-sdk');
 //need to load IAM user with region to work with dynamodb
-//aws.config.loadFromPath('aws-config.json');
 
+/************ LOCAL CONFIG *********************/
+//aws.config.loadFromPath('aws-config.json');
+/************ HEROKU CONFIG *********************/
 var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXXXXX";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXXXXX";
 aws.config.update({
