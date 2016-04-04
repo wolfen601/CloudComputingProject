@@ -199,7 +199,9 @@ io.on('connection', function (socket) {
                 //if no reviews exist
                 if (typeof conference.Reviews == 'undefined') {
                     //no reviews are added, ignore year
-                    conference.Reviews.Review = [review];
+                    conference.Reviews = [];
+                    conference.Reviews.push(review);
+                    //conference.Reviews.Review = [review];
                 }
                 else{
                     //reviews exist, append to current year (if exists)
@@ -208,7 +210,7 @@ io.on('connection', function (socket) {
                         var existingReview = conference.Reviews[x];
                         if(existingReview.Year == review.Year)
                         {
-                            conference.Reviews[x].Review.push(review.Review);
+                            conference.Reviews[x].Review.push(review.Review.pop());
                             foundYear = true;
                             break;
                         }
