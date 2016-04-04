@@ -1,6 +1,14 @@
 var aws = require('aws-sdk');
 //need to load IAM user with region to work with dynamodb
-aws.config.loadFromPath('aws-config.json');
+//aws.config.loadFromPath('aws-config.json');
+
+var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXX";
+var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXX";
+aws.config.update({
+ accessKeyId: accessKeyId,
+ secretAccessKey: secretAccessKey,
+ region: "us-west-2"
+});
 
 var dynamodb = new aws.DynamoDB();
 var docClient = new aws.DynamoDB.DocumentClient();
@@ -354,10 +362,3 @@ module.exports = {
     orderReviews : orderReviews,
     numberOfReviews: numberOfReviews
 }
-
-
-
-
-
-
-

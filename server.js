@@ -41,13 +41,13 @@ var conferenceList = {};
 var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXX";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXX";
 var table = "Users";
-//aws.config.update({
-//  accessKeyId: accessKeyId,
-//  secretAccessKey: secretAccessKey,
-//  region: "us-west-2"
-//});
+aws.config.update({
+ accessKeyId: accessKeyId,
+ secretAccessKey: secretAccessKey,
+ region: "us-west-2"
+});
 
-aws.config.loadFromPath('aws-config.json');
+//aws.config.loadFromPath('aws-config.json');
 
 var docClient = new aws.DynamoDB.DocumentClient({
     params: {
