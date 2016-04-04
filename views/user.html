@@ -16,13 +16,14 @@
 </head>
 
 <body>
-    <header id="title">
-        <h1>CoCo Conference
+    <div id="title" style="padding-bottom: 0px;">
+        <header>
+            <h1>CoCo Conference
          <small>Rate and share conferences easily!</small>
        </h1>
-    </header>
-    <div class="container">
-        <div class="row">
+        </header>
+        <!-- tabs on top -->
+        <div class="container">
             <div id="navigation">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
@@ -42,6 +43,13 @@
                 </ul>
             </div>
         </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+        </div>
     </div>
 
     <div id="searchBarContainer" class="container">
@@ -49,7 +57,7 @@
         <div class="row">
             <div id="taskBar">
                 <form class="searchForm" onsubmit="return false;">
-                    <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym"/>
+                    <input id="searchBar" name="conference[acronym]" placeholder="Conference Acronym" />
                     <button id="submitSearch" class="btn btn-info">Search</button>
                 </form>
             </div>
@@ -63,7 +71,7 @@
         <div id="home" class="tab-pane fade in active">
             <div class="container">
                 <!--TITLE GOES HERE -->
-                <div id="nameBox">   
+                <div id="nameBox">
                 </div>
                 <!-- REVIEWS GO HERE -->
                 <div id="confArea">
@@ -81,26 +89,26 @@
             </div>
         </div>
         <div id="analytics" class="tab-pane fade">
-          <div class="container">
-            <div id="analyticsWindow"></div>
-          </div>
+            <div class="container">
+                <div id="analyticsWindow"></div>
+            </div>
         </div>
         <div id="account" class="tab-pane fade">
-          <div class="container" style="background-color: #ffffff;">
-            <div id="accountSummary">
-              <h4>Username:  <span class="accountSpan" id="usernameDisplay"></span></h4>
-              <h4>Password:  <span class="accountSpan" id="passwordDisplay"></span></h4>
-              <h4>Last Logged In:  <span class="accountSpan" id="lastLoggedInDisplay"></span></h4>
-              <h4>Number of Reviews:  <span class="accountSpan" id="totalReviewsDisplay"></span></h4>
-            </div>
-            <footer id="accountFooter">
-                <div class="container">
-                    <div class="row">
-                        <button id="editAccountButton" class="btn btn-info" data-toggle="modal" data-target="#editAccount">Change Password</button>
-                    </div>
+            <div class="container" style="background-color: #ffffff;">
+                <div id="accountSummary">
+                    <h4>Username:  <span class="accountSpan" id="usernameDisplay"></span></h4>
+                    <h4>Password:  <span class="accountSpan" id="passwordDisplay"></span></h4>
+                    <h4>Last Logged In:  <span class="accountSpan" id="lastLoggedInDisplay"></span></h4>
+                    <h4>Number of Reviews:  <span class="accountSpan" id="totalReviewsDisplay"></span></h4>
                 </div>
-            </footer>
-          </div>
+                <footer id="accountFooter">
+                    <div class="container">
+                        <div class="row">
+                            <button id="editAccountButton" class="btn btn-info" data-toggle="modal" data-target="#editAccount">Change Password</button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
 
     </div>
@@ -130,7 +138,7 @@
                         </select>
                         <br>
                         <label>Comments:</label>
-                        <input id="details" name="details" placeholder="Details or Comments"/>
+                        <input id="details" name="details" placeholder="Details or Comments" />
                     </form>
                 </div>
                 <div class="modal-footer">
