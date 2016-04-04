@@ -7,7 +7,7 @@ var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXX";
 aws.config.update({
  accessKeyId: accessKeyId,
  secretAccessKey: secretAccessKey,
- region: "us-west-2"
+ region: "us-east-1"
 });
 
 var dynamodb = new aws.DynamoDB();
