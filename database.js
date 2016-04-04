@@ -2,15 +2,15 @@ var aws = require('aws-sdk');
 //need to load IAM user with region to work with dynamodb
 
 /************ LOCAL CONFIG *********************/
-aws.config.loadFromPath('aws-config.json');
+//aws.config.loadFromPath('aws-config.json');
 /************ HEROKU CONFIG *********************/
-// var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXXXXX";
-// var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXXXXX";
-// aws.config.update({
-//  "accessKeyId": accessKeyId,
-//  "secretAccessKey": secretAccessKey,
-//  "region": "us-east-1"
-// });
+var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXXXXX";
+var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXXXXX";
+aws.config.update({
+ "accessKeyId": accessKeyId,
+ "secretAccessKey": secretAccessKey,
+ "region": "us-east-1"
+});
 
 var dynamodb = new aws.DynamoDB();
 var docClient = new aws.DynamoDB.DocumentClient();
@@ -317,7 +317,7 @@ var orderReviews = function(conference){
     if(typeof conference.Reviews != "undefined"){
         conference.Reviews.sort(compare);
     }
-    
+
     return conference;
 }
 
