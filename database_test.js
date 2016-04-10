@@ -132,7 +132,7 @@ var accountData = {
 //    }
 // });
 
-
+//Create Tables
 // database.createTables(function(error, data){
 //    if(error){
 //        console.log(error);
