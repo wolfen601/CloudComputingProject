@@ -151,16 +151,16 @@ var accountData = {
 //    }
 //});
 
-database.insertConference(conferenceData, function(error, data)
-{
-   if(error){
-       console.log(error);
-   }
-   else{
-       //successfully inserted
-       console.log(data);
-   }
-});
+// database.insertConference(conferenceData, function(error, data)
+// {
+//   if(error){
+//       console.log(error);
+//   }
+//   else{
+//       //successfully inserted
+//       console.log(data);
+//   }
+// });
 
 //database.insertUser(user, function(error, data){
 //    if(error){
