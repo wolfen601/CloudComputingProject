@@ -6,6 +6,8 @@ A cloud based conference review application that enables participants to review 
 
 [Heroku CLI installed](https://devcenter.heroku.com/articles/heroku-command)
 
+[Heroku Toolbelt](https://toolbelt.heroku.com/)
+
 ## Setup
 ### Heroku Setup
 1. Clone the repository
@@ -22,6 +24,11 @@ A cloud based conference review application that enables participants to review 
 
 `var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXXXXX";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXXXXX";`
+
+If running on Heroku,  update AWS configuration in database.js. Add environment variables through the dashboard.
+
+AWS_ACCESS_KEY = XXXXXXXXXXXX
+AWS_SECRET_KEY = XXXXXXXXXXXX
 
 2. Remove the comments surrounding the create tables snippet in database_test.js and run database_test.js.
 3. Commment out the create tables snippet and remove the comments surrounding the insert users and insert conferences. Run database_test.js.

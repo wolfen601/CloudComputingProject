@@ -3,6 +3,8 @@ var aws = require('aws-sdk');
 
 /************ LOCAL CONFIG *********************/
 //aws.config.loadFromPath('aws-config.json');
+
+
 /************ HEROKU CONFIG *********************/
 var accessKeyId =  process.env.AWS_ACCESS_KEY || "XXXXXXXXXXXX";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "XXXXXXXXXXXXX";
